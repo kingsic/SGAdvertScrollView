@@ -24,6 +24,7 @@
     // 例一
     SGAdvertScrollView *advertScrollView = [[SGAdvertScrollView alloc] init];
     advertScrollView.frame = CGRectMake(0, 150, self.view.frame.size.width, 30);
+    advertScrollView.titleColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
     advertScrollView.image = [UIImage imageNamed:@"horn_icon"];
     advertScrollView.titleArray = @[@"常见电商类 app 滚动播放广告信息", @"采用代理模式封装, 可进行事件点击处理", @"建议去 github 上下载"];
     advertScrollView.titleFont = [UIFont systemFontOfSize:14];

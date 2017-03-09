@@ -33,7 +33,7 @@
     if (!_tipsLabel) {
         _tipsLabel = [[UILabel alloc] init];
         _tipsLabel.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-        _tipsLabel.textColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+        _tipsLabel.textColor = [UIColor blackColor];
         _tipsLabel.numberOfLines = 2;
         _tipsLabel.font = [UIFont systemFontOfSize:12];
     }
