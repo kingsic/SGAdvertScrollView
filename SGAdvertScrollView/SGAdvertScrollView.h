@@ -16,6 +16,11 @@
 #import <UIKit/UIKit.h>
 @class SGAdvertScrollView;
 
+typedef enum : NSUInteger {
+    SGAdvertScrollViewStyleNormal,
+    SGAdvertScrollViewStyleTwo,
+} SGAdvertScrollViewStyle;
+
 /** delegate */
 @protocol SGAdvertScrollViewDelegate <NSObject>
 - (void)advertScrollView:(SGAdvertScrollView *)advertScrollView didSelectedItemAtIndex:(NSInteger)index;
@@ -23,20 +28,27 @@
 @end
 
 @interface SGAdvertScrollView : UIView
-/** 左边提示图片 */
-@property (nonatomic, strong) UIImage *image;
-/** 右边标题数组（要么是NSString，要么NSMutableAttributedString，不可混用）*/
-@property (nonatomic, strong) NSArray *titleArray;
-/** 设置滚动时间间隔(默认 3s) */
-@property (nonatomic, assign) CGFloat timeInterval;
-/** 标题字体大小(默认 12) */
-@property (nonatomic, strong) UIFont *titleFont;
-/** 标题字体颜色(默认 黑色) */
-@property (nonatomic, strong) UIColor *titleColor;
-/** titleArray 是否包含 NSMutableAttributedString 默认为NO，如果包含必须设置为 YES */
-@property (nonatomic, assign) BOOL isHaveMutableAttributedString;
-
 /** delegate_SG */
-@property (nonatomic, weak) id<SGAdvertScrollViewDelegate> advertScrollViewDelegate;
+@property (nonatomic, weak) id<SGAdvertScrollViewDelegate> delegateAdvertScrollView;
+/** SGAdvertScrollViewStyle */
+@property (nonatomic, assign) SGAdvertScrollViewStyle advertScrollViewStyle;
+/** 设置滚动时间间隔(默认 3s) */
+@property (nonatomic, assign) CGFloat scrollTimeInterval;
+/** 左边提示图片 */
+@property (nonatomic, strong) NSString *leftImageString;
+/** 右边标题数组，当 SGAdvertScrollViewStyle 为 SGAdvertScrollViewStyleTwo, 此标题数组为 topLabel 标题数组 */
+@property (nonatomic, strong) NSArray *titles;
+/** 左边标志图片数组，只有 SGAdvertScrollViewStyleTwo 样式时，才有效 */
+@property (nonatomic, strong) NSArray *signImages;
+/** 左边底部标题数组，只有 SGAdvertScrollViewStyleTwo 样式时，才有效 */
+@property (nonatomic, strong) NSArray *bottomTitles;
+/** 标题字体大小(默认 12), 当 SGAdvertScrollViewStyle 为 SGAdvertScrollViewStyleTwo, 此 titleFont 为 topLabel 文字颜色 */
+@property (nonatomic, strong) UIFont *titleFont;
+/** 标题字体颜色(默认 黑色), 当 SGAdvertScrollViewStyle 为 SGAdvertScrollViewStyleTwo, 此 titleColor 为 topLabel 文字颜色 */
+@property (nonatomic, strong) UIColor *titleColor;
+/** 标题字体大小(默认 12), 只有 SGAdvertScrollViewStyleTwo 样式时，才有效 */
+@property (nonatomic, strong) UIFont *bottomTitleFont;
+/** 标题字体颜色(默认 黑色), 只有 SGAdvertScrollViewStyleTwo 样式时，才有效 */
+@property (nonatomic, strong) UIColor *bottomTitleColor;
 
 @end

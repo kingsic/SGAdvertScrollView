@@ -14,12 +14,13 @@
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
 
 #import "SGAdvertScrollView.h"
+#import "UIImageView+WebCache.h"
 
-@interface SGAdvertScrollViewCell : UICollectionViewCell
+@interface SGAdvertScrollViewOneCell : UICollectionViewCell
 @property (nonatomic, strong) UILabel *tipsLabel;
 @end
 
-@implementation SGAdvertScrollViewCell
+@implementation SGAdvertScrollViewOneCell
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
@@ -29,15 +30,83 @@
     }
     return self;
 }
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.tipsLabel.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+}
 - (UILabel *)tipsLabel {
     if (!_tipsLabel) {
         _tipsLabel = [[UILabel alloc] init];
-        _tipsLabel.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
         _tipsLabel.textColor = [UIColor blackColor];
         _tipsLabel.numberOfLines = 2;
         _tipsLabel.font = [UIFont systemFontOfSize:12];
     }
     return _tipsLabel;
+}
+@end
+
+@interface SGAdvertScrollViewTwoCell : UICollectionViewCell
+@property (nonatomic, strong) UILabel *topLabel;
+@property (nonatomic, strong) UIImageView *signImageView;
+@property (nonatomic, strong) UILabel *bottomLabel;
+@end
+
+@implementation SGAdvertScrollViewTwoCell
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+        self.backgroundColor = [UIColor clearColor];
+        
+        [self.contentView addSubview:self.topLabel];
+        [self.contentView addSubview:self.signImageView];
+        [self.contentView addSubview:self.bottomLabel];
+    }
+    return self;
+}
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    CGFloat topLabelX = 0;
+    CGFloat topLabelY = 0;
+    CGFloat topLabelW = self.frame.size.width;
+    CGFloat topLabelH = 0.5 * self.frame.size.height;
+    self.topLabel.frame = CGRectMake(topLabelX, topLabelY, topLabelW, topLabelH);
+    
+    CGFloat signImageViewW = self.signImageView.image.size.width;
+    CGFloat signImageViewH = self.signImageView.image.size.height;
+    CGFloat signImageViewX = 0;
+    CGFloat signImageViewY = topLabelH + 0.5 * (topLabelH - signImageViewH);
+    self.signImageView.frame = CGRectMake(signImageViewX, signImageViewY, signImageViewW, signImageViewH);
+    
+    CGFloat bottomLabelX = CGRectGetMaxX(self.signImageView.frame);
+    CGFloat bottomLabelY = CGRectGetMaxY(self.topLabel.frame);
+    CGFloat bottomLabelW = self.frame.size.width - bottomLabelX;
+    CGFloat bottomLabelH = topLabelH;
+    self.bottomLabel.frame = CGRectMake(bottomLabelX, bottomLabelY, bottomLabelW, bottomLabelH);
+}
+- (UILabel *)topLabel {
+    if (!_topLabel) {
+        _topLabel = [[UILabel alloc] init];
+        _topLabel.textColor = [UIColor blackColor];
+        _topLabel.numberOfLines = 2;
+        _topLabel.font = [UIFont systemFontOfSize:12];
+    }
+    return _topLabel;
+}
+- (UIImageView *)signImageView {
+    if (!_signImageView) {
+        _signImageView = [[UIImageView alloc] init];
+    }
+    return _signImageView;
+}
+- (UILabel *)bottomLabel {
+    if (!_bottomLabel) {
+        _bottomLabel = [[UILabel alloc] init];
+        _bottomLabel.textColor = [UIColor blackColor];
+        _bottomLabel.numberOfLines = 2;
+        _bottomLabel.font = [UIFont systemFontOfSize:12];
+    }
+    return _bottomLabel;
 }
 @end
 
@@ -47,34 +116,42 @@
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 @property (nonatomic, strong) NSTimer *timer;
-@property (nonatomic, strong) NSArray *tempArr;
+@property (nonatomic, strong) NSArray *tempTitleArr;
+@property (nonatomic, strong) NSArray *tempImageArr;
+@property (nonatomic, strong) NSArray *tempBottomTitleArr;
 @end
 
 @implementation SGAdvertScrollView
 
 static NSUInteger  const SGMaxSections = 100;
 static CGFloat const SGMargin = 10;
+static NSString *const advertScrollViewOneCell = @"SGAdvertScrollViewOneCell";
+static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    [self initialization];
     [self setupSubviews];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
+        [self initialization];
         [self setupSubviews];
     }
     return self;
+}
+
+- (void)initialization {
+    self.scrollTimeInterval = 3.0;
+    [self addTimer];
+    self.advertScrollViewStyle = SGAdvertScrollViewStyleNormal;
 }
 
 - (void)setupSubviews {
     self.backgroundColor = [UIColor whiteColor];
     [self setupLeftImageView];
     [self setupCollectionView];
-    self.timeInterval = 3.0;
-    self.isHaveMutableAttributedString = NO;
-    // 添加定时器
-    [self addTimer];
 }
 
 - (void)setupLeftImageView {
@@ -94,7 +171,8 @@ static CGFloat const SGMargin = 10;
     _collectionView.showsVerticalScrollIndicator = NO;
     _collectionView.backgroundColor = [UIColor clearColor];
     // 注册
-    [_collectionView registerClass:[SGAdvertScrollViewCell class] forCellWithReuseIdentifier:@"tipsCell"];
+    [_collectionView registerClass:[SGAdvertScrollViewOneCell class] forCellWithReuseIdentifier:advertScrollViewOneCell];
+    [_collectionView registerClass:[SGAdvertScrollViewTwoCell class] forCellWithReuseIdentifier:advertScrollViewTwoCell];
     [self addSubview:_collectionView];
 }
 
@@ -121,9 +199,10 @@ static CGFloat const SGMargin = 10;
     // 默认显示最中间的那组
     [self defaultSelectedScetion];
 }
+
 /// 默认选中的组
 - (void)defaultSelectedScetion {
-    if (self.tempArr.count == 0) return; // 为解决加载数据延迟问题
+    if (self.tempTitleArr.count == 0) return; // 为解决加载数据延迟问题
     // 默认显示最中间的那组
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:SGMaxSections / 2] atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
 }
@@ -132,35 +211,58 @@ static CGFloat const SGMargin = 10;
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return SGMaxSections;
 }
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.tempArr.count;
+    return self.tempTitleArr.count;
 }
+
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    SGAdvertScrollViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"tipsCell" forIndexPath:indexPath];
-    if (self.isHaveMutableAttributedString == YES) {
-        cell.tipsLabel.attributedText = self.tempArr[indexPath.item];
+    if (self.advertScrollViewStyle == SGAdvertScrollViewStyleTwo) {
+        SGAdvertScrollViewTwoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:advertScrollViewTwoCell forIndexPath:indexPath];
+        cell.topLabel.text = self.tempTitleArr[indexPath.row];
+        NSString *imagePath = self.tempImageArr[indexPath.row];
+        if ([imagePath hasPrefix:@"http"]) {
+            [cell.signImageView sd_setImageWithURL:[NSURL URLWithString:imagePath]];
+        } else {
+            cell.signImageView.image = [UIImage imageNamed:imagePath];
+        }
+        cell.bottomLabel.text = self.tempBottomTitleArr[indexPath.row];
+        if (self.titleFont != nil) {
+            cell.topLabel.font = self.titleFont;
+        }
+        if (self.titleColor != nil) {
+            cell.topLabel.textColor = self.titleColor;
+        }
+        if (self.bottomTitleFont != nil) {
+            cell.bottomLabel.font = self.bottomTitleFont;
+        }
+        if (self.bottomTitleColor != nil) {
+            cell.bottomLabel.textColor = self.bottomTitleColor;
+        }
+        return cell;
     } else {
-        cell.tipsLabel.text = self.tempArr[indexPath.item];
+        SGAdvertScrollViewOneCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:advertScrollViewOneCell forIndexPath:indexPath];
+        cell.tipsLabel.text = self.tempTitleArr[indexPath.item];
+        if (self.titleFont != nil) {
+            cell.tipsLabel.font = self.titleFont;
+        }
+        if (self.titleColor != nil) {
+            cell.tipsLabel.textColor = self.titleColor;
+        }
+        return cell;
     }
-    if (self.titleFont != nil) {
-        cell.tipsLabel.font = self.titleFont;
-    }
-    if (self.titleColor != nil) {
-        cell.tipsLabel.textColor = self.titleColor;
-    }
-    return cell;
 }
-#pragma mark - - - UICollectionView 的 delegate 方法
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.advertScrollViewDelegate && [self.advertScrollViewDelegate respondsToSelector:@selector(advertScrollView:didSelectedItemAtIndex:)]) {
-        [self.advertScrollViewDelegate advertScrollView:self didSelectedItemAtIndex:indexPath.item];
+    if (self.delegateAdvertScrollView && [self.delegateAdvertScrollView respondsToSelector:@selector(advertScrollView:didSelectedItemAtIndex:)]) {
+        [self.delegateAdvertScrollView advertScrollView:self didSelectedItemAtIndex:indexPath.item];
     }
 }
 
 #pragma mark - - - 创建定时器
 - (void)addTimer {
     [self removeTimer];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:self.timeInterval target:self selector:@selector(beginUpdateUI) userInfo:nil repeats:YES];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:self.scrollTimeInterval target:self selector:@selector(beginUpdateUI) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
 }
 #pragma mark - - - 移除定时器
@@ -170,7 +272,7 @@ static CGFloat const SGMargin = 10;
 }
 #pragma mark - - - 定时器执行方法 - 更新UI
 - (void)beginUpdateUI {
-    if (self.tempArr.count == 0) return; // 为解决加载网络图片延迟问题
+    if (self.tempTitleArr.count == 0) return; // 为解决加载网络图片延迟问题
 
     // 1、当前正在展示的位置
     NSIndexPath *currentIndexPath = [[self.collectionView indexPathsForVisibleItems] lastObject];
@@ -183,7 +285,7 @@ static CGFloat const SGMargin = 10;
     // 2、计算出下一个需要展示的位置
     NSInteger nextItem = resetCurrentIndexPath.item + 1;
     NSInteger nextSection = resetCurrentIndexPath.section;
-    if (nextItem == self.tempArr.count) {
+    if (nextItem == self.tempTitleArr.count) {
         nextItem = 0;
         nextSection++;
     }
@@ -194,18 +296,35 @@ static CGFloat const SGMargin = 10;
 }
 
 #pragma mark - - - setting
-- (void)setImage:(UIImage *)image {
-    _image = image;
-    _imageView.image = image;
+- (void)setLeftImageString:(NSString *)leftImageString {
+    _leftImageString = leftImageString;
+    if ([leftImageString hasPrefix:@"http"]) {
+        [_imageView sd_setImageWithURL:[NSURL URLWithString:leftImageString]];
+    } else {
+        _imageView.image = [UIImage imageNamed:leftImageString];
+    }
 }
 
-- (void)setTitleArray:(NSArray *)titleArray {
-    _titleArray = titleArray;
-    self.tempArr = [NSArray arrayWithArray:titleArray];
+- (void)setTitles:(NSArray *)titles {
+    _titles = titles;
+    
+    self.tempTitleArr = [NSArray arrayWithArray:titles];
+    [self.collectionView reloadData];
 }
 
-- (void)setTimeInterval:(CGFloat)timeInterval {
-    _timeInterval = timeInterval;
+- (void)setSignImages:(NSArray *)signImages {
+    _signImages = signImages;
+    self.tempImageArr = [NSArray arrayWithArray:signImages];
+}
+
+- (void)setBottomTitles:(NSArray *)bottomTitles {
+    _bottomTitles = bottomTitles;
+    
+    self.tempBottomTitleArr = [NSArray arrayWithArray:bottomTitles];
+}
+
+- (void)setScrollTimeInterval:(CGFloat)scrollTimeInterval {
+    _scrollTimeInterval = scrollTimeInterval;
     [self addTimer];
 }
 
