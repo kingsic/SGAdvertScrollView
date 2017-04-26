@@ -66,16 +66,18 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
+    CGFloat margin = 5;
+    
     CGFloat topLabelX = 0;
-    CGFloat topLabelY = 0;
+    CGFloat topLabelY = margin;
     CGFloat topLabelW = self.frame.size.width;
-    CGFloat topLabelH = 0.5 * self.frame.size.height;
+    CGFloat topLabelH = 0.5 * (self.frame.size.height - 2 * topLabelY);
     self.topLabel.frame = CGRectMake(topLabelX, topLabelY, topLabelW, topLabelH);
     
     CGFloat signImageViewW = self.signImageView.image.size.width;
     CGFloat signImageViewH = self.signImageView.image.size.height;
     CGFloat signImageViewX = 0;
-    CGFloat signImageViewY = topLabelH + 0.5 * (topLabelH - signImageViewH);
+    CGFloat signImageViewY = CGRectGetMaxY(self.topLabel.frame);
     self.signImageView.frame = CGRectMake(signImageViewX, signImageViewY, signImageViewW, signImageViewH);
     
     CGFloat bottomLabelX = CGRectGetMaxX(self.signImageView.frame);
@@ -113,6 +115,7 @@
 #pragma mark - - - SGAdvertScrollView
 @interface SGAdvertScrollView () <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UIView *separator;
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 @property (nonatomic, strong) NSTimer *timer;
@@ -144,6 +147,7 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 
 - (void)initialization {
     self.scrollTimeInterval = 3.0;
+    self.isShowSeparator = YES;
     [self addTimer];
     self.advertScrollViewStyle = SGAdvertScrollViewStyleNormal;
 }
@@ -157,6 +161,10 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 - (void)setupLeftImageView {
     self.imageView = [[UIImageView alloc] init];
     [self addSubview:_imageView];
+    
+    self.separator = [[UIView alloc] init];
+    _separator.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
+    [self addSubview:_separator];
 }
 
 - (void)setupCollectionView {
@@ -186,11 +194,24 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
     CGFloat imageViewW = imageViewH;
     _imageView.frame = CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH);
     
+    // 设置分割线尺寸
+    CGFloat separatorX = CGRectGetMaxX(_imageView.frame) + 0.5 * SGMargin;
+    CGFloat separatorY = 0.7 * SGMargin;
+    CGFloat separatorW = 1;
+    CGFloat separatorH = self.frame.size.height - 2 * separatorY;
+    _separator.frame = CGRectMake(separatorX, separatorY, separatorW, separatorH);
+    
     // 设置 collectionView 尺寸
-    CGFloat collectionViewX = CGRectGetMaxX(_imageView.frame) + SGMargin;
+    CGFloat collectionViewX;
     CGFloat collectionViewY = 0;
     CGFloat collectionViewW = self.frame.size.width - collectionViewX - SGMargin;
     CGFloat collectionViewH = self.frame.size.height;
+    if (self.isShowSeparator == NO) {
+        collectionViewX = CGRectGetMaxX(_imageView.frame) + SGMargin;
+    } else {
+        collectionViewX = CGRectGetMaxX(_separator.frame) + SGMargin;
+    }
+
     _collectionView.frame = CGRectMake(collectionViewX, collectionViewY, collectionViewW, collectionViewH);
 
     // 设置 UICollectionViewFlowLayout 尺寸
@@ -326,6 +347,19 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 - (void)setScrollTimeInterval:(CGFloat)scrollTimeInterval {
     _scrollTimeInterval = scrollTimeInterval;
     [self addTimer];
+}
+
+- (void)setIsShowSeparator:(BOOL)isShowSeparator {
+    _isShowSeparator = isShowSeparator;
+    if (isShowSeparator == NO) {
+        [self.separator removeFromSuperview];
+        self.separator = nil;
+    }
+}
+
+- (void)setSeparatorColor:(UIColor *)separatorColor {
+    _separatorColor = separatorColor;
+    self.separator.backgroundColor = separatorColor;
 }
 
 

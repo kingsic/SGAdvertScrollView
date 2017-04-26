@@ -50,5 +50,9 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) UIFont *bottomTitleFont;
 /** 标题字体颜色(默认 黑色), 只有 SGAdvertScrollViewStyleTwo 样式时，才有效 */
 @property (nonatomic, strong) UIColor *bottomTitleColor;
+/** 是否显示分割线(默认为 YES) */
+@property (nonatomic, assign) BOOL isShowSeparator;
+/** 分割线颜色(默认 浅灰色) */
+@property (nonatomic, strong) UIColor *separatorColor;
 
 @end
