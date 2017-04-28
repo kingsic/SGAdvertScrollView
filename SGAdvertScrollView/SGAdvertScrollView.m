@@ -45,6 +45,7 @@
 }
 @end
 
+#pragma mark - - - SGAdvertScrollViewTwoCell
 @interface SGAdvertScrollViewTwoCell : UICollectionViewCell
 @property (nonatomic, strong) UILabel *topLabel;
 @property (nonatomic, strong) UIImageView *signImageView;
@@ -148,6 +149,7 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 - (void)initialization {
     self.scrollTimeInterval = 3.0;
     self.isShowSeparator = YES;
+    self.isAutoScroll = YES;
     [self addTimer];
     self.advertScrollViewStyle = SGAdvertScrollViewStyleNormal;
 }
@@ -202,7 +204,7 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
     _separator.frame = CGRectMake(separatorX, separatorY, separatorW, separatorH);
     
     // 设置 collectionView 尺寸
-    CGFloat collectionViewX;
+    CGFloat collectionViewX = 0;
     CGFloat collectionViewY = 0;
     CGFloat collectionViewW = self.frame.size.width - collectionViewX - SGMargin;
     CGFloat collectionViewH = self.frame.size.height;
@@ -280,13 +282,13 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
     }
 }
 
-#pragma mark - - - 创建定时器
+/// 创建定时器
 - (void)addTimer {
     [self removeTimer];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:self.scrollTimeInterval target:self selector:@selector(beginUpdateUI) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
 }
-#pragma mark - - - 移除定时器
+/// 移除定时器
 - (void)removeTimer {
     [_timer invalidate];
     _timer = nil;
@@ -297,10 +299,9 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 
     // 1、当前正在展示的位置
     NSIndexPath *currentIndexPath = [[self.collectionView indexPathsForVisibleItems] lastObject];
-    //SGDebugLog(@"currentIndexPath - - %@", currentIndexPath);
+
     // 马上显示回最中间那组的数据
     NSIndexPath *resetCurrentIndexPath = [NSIndexPath indexPathForItem:currentIndexPath.item inSection:SGMaxSections / 2];
-    //SGDebugLog(@"section - - %ld; item - - %ld", resetCurrentIndexPath.section, resetCurrentIndexPath.item);
     [self.collectionView scrollToItemAtIndexPath:resetCurrentIndexPath atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
 
     // 2、计算出下一个需要展示的位置
@@ -328,7 +329,9 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 
 - (void)setTitles:(NSArray *)titles {
     _titles = titles;
-    
+    if (titles.count == 0 || titles.count == 1) { // 数组为空或者数组个数为 1，停止滚动状态
+        [self removeTimer];
+    }
     self.tempTitleArr = [NSArray arrayWithArray:titles];
     [self.collectionView reloadData];
 }
@@ -360,6 +363,14 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 - (void)setSeparatorColor:(UIColor *)separatorColor {
     _separatorColor = separatorColor;
     self.separator.backgroundColor = separatorColor;
+}
+
+- (void)setIsAutoScroll:(BOOL)isAutoScroll {
+    _isAutoScroll = isAutoScroll;
+    if (isAutoScroll == NO) {
+        [self removeTimer];
+        self.collectionView.scrollEnabled = YES;
+    }
 }
 
 

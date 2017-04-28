@@ -54,5 +54,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) BOOL isShowSeparator;
 /** 分割线颜色(默认 浅灰色) */
 @property (nonatomic, strong) UIColor *separatorColor;
+/** 是否自动滚动(默认为 YES，不建议使用此属性，没有什么意义) */
+@property (nonatomic, assign) BOOL isAutoScroll;
 
 @end
