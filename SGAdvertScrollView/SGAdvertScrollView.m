@@ -206,14 +206,13 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
     // 设置 collectionView 尺寸
     CGFloat collectionViewX = 0;
     CGFloat collectionViewY = 0;
-    CGFloat collectionViewW = self.frame.size.width - collectionViewX - SGMargin;
-    CGFloat collectionViewH = self.frame.size.height;
     if (self.isShowSeparator == NO) {
         collectionViewX = CGRectGetMaxX(_imageView.frame) + SGMargin;
     } else {
         collectionViewX = CGRectGetMaxX(_separator.frame) + SGMargin;
     }
-
+    CGFloat collectionViewW = self.frame.size.width - collectionViewX - SGMargin;
+    CGFloat collectionViewH = self.frame.size.height;
     _collectionView.frame = CGRectMake(collectionViewX, collectionViewY, collectionViewW, collectionViewH);
 
     // 设置 UICollectionViewFlowLayout 尺寸
