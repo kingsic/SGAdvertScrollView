@@ -190,11 +190,19 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
     [super layoutSubviews];
     
     // 设置图片尺寸
-    CGFloat imageViewX = SGMargin;
-    CGFloat imageViewY = 0.5 * SGMargin;
-    CGFloat imageViewH = self.frame.size.height - 2 * imageViewY;
-    CGFloat imageViewW = imageViewH;
-    _imageView.frame = CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH);
+    if (self.advertScrollViewStyle == SGAdvertScrollViewStyleTwo) { // 左边提示图片根据图片尺寸距离顶部、底部间距为 5
+        CGFloat imageViewX = SGMargin;
+        CGFloat imageViewY = 0.5 * SGMargin;
+        CGFloat imageViewH = self.frame.size.height - 2 * imageViewY;
+        CGFloat imageViewW = imageViewH;
+        _imageView.frame = CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH);
+    } else { // 左边提示图片根据图片尺寸自适应
+        CGFloat imageViewW = _imageView.image.size.width;
+        CGFloat imageViewH = _imageView.image.size.height;
+        CGFloat imageViewX = SGMargin;
+        CGFloat imageViewY = 0.5 * (self.frame.size.height - imageViewH);
+        _imageView.frame = CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH);
+    }
     
     // 设置分割线尺寸
     CGFloat separatorX = CGRectGetMaxX(_imageView.frame) + 0.5 * SGMargin;
