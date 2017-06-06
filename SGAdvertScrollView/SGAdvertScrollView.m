@@ -30,19 +30,21 @@
     }
     return self;
 }
+
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.tipsLabel.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
 }
+
 - (UILabel *)tipsLabel {
     if (!_tipsLabel) {
         _tipsLabel = [[UILabel alloc] init];
         _tipsLabel.textColor = [UIColor blackColor];
-        _tipsLabel.numberOfLines = 2;
         _tipsLabel.font = [UIFont systemFontOfSize:12];
     }
     return _tipsLabel;
 }
+
 @end
 
 #pragma mark - - - SGAdvertScrollViewTwoCell
@@ -64,6 +66,7 @@
     }
     return self;
 }
+
 - (void)layoutSubviews {
     [super layoutSubviews];
     
@@ -87,38 +90,40 @@
     CGFloat bottomLabelH = topLabelH;
     self.bottomLabel.frame = CGRectMake(bottomLabelX, bottomLabelY, bottomLabelW, bottomLabelH);
 }
+
 - (UILabel *)topLabel {
     if (!_topLabel) {
         _topLabel = [[UILabel alloc] init];
         _topLabel.textColor = [UIColor blackColor];
-        _topLabel.numberOfLines = 2;
         _topLabel.font = [UIFont systemFontOfSize:12];
     }
     return _topLabel;
 }
+
 - (UIImageView *)signImageView {
     if (!_signImageView) {
         _signImageView = [[UIImageView alloc] init];
     }
     return _signImageView;
 }
+
 - (UILabel *)bottomLabel {
     if (!_bottomLabel) {
         _bottomLabel = [[UILabel alloc] init];
         _bottomLabel.textColor = [UIColor blackColor];
-        _bottomLabel.numberOfLines = 2;
         _bottomLabel.font = [UIFont systemFontOfSize:12];
     }
     return _bottomLabel;
 }
+
 @end
 
 #pragma mark - - - SGAdvertScrollView
 @interface SGAdvertScrollView () <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIView *separator;
-@property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
+@property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, strong) NSArray *tempTitleArr;
 @property (nonatomic, strong) NSArray *tempImageArr;
@@ -127,8 +132,8 @@
 
 @implementation SGAdvertScrollView
 
-static NSUInteger  const SGMaxSections = 100;
-static CGFloat const SGMargin = 10;
+static NSUInteger  const advertScrollViewMaxSections = 100;
+static CGFloat const advertScrollViewSpeacing = 10;
 static NSString *const advertScrollViewOneCell = @"SGAdvertScrollViewOneCell";
 static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 
@@ -140,6 +145,7 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
+        self.backgroundColor = [UIColor whiteColor];
         [self initialization];
         [self setupSubviews];
     }
@@ -147,99 +153,97 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 }
 
 - (void)initialization {
-    self.scrollTimeInterval = 3.0;
-    self.isShowSeparator = YES;
-    self.isAutoScroll = YES;
+    _scrollTimeInterval = 3.0;
+    _isShowSeparator = YES;
     [self addTimer];
-    self.advertScrollViewStyle = SGAdvertScrollViewStyleNormal;
+    _advertScrollViewStyle = SGAdvertScrollViewStyleNormal;
 }
 
 - (void)setupSubviews {
-    self.backgroundColor = [UIColor whiteColor];
-    [self setupLeftImageView];
-    [self setupCollectionView];
+    [self addSubview:self.imageView];
+    [self addSubview:self.collectionView];
 }
 
-- (void)setupLeftImageView {
-    self.imageView = [[UIImageView alloc] init];
-    [self addSubview:_imageView];
-    
-    self.separator = [[UIView alloc] init];
-    _separator.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.1];
-    [self addSubview:_separator];
+- (UIImageView *)imageView {
+    if (!_imageView) {
+        _imageView = [[UIImageView alloc] init];
+    }
+    return _imageView;
 }
 
-- (void)setupCollectionView {
-    self.flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    _flowLayout.minimumLineSpacing = 0;
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:_flowLayout];
-    _collectionView.delegate = self;
-    _collectionView.dataSource = self;
-    _collectionView.scrollsToTop = NO;
-    _collectionView.scrollEnabled = NO;
-    _collectionView.pagingEnabled = YES;
-    _collectionView.showsVerticalScrollIndicator = NO;
-    _collectionView.backgroundColor = [UIColor clearColor];
-    // 注册
-    [_collectionView registerClass:[SGAdvertScrollViewOneCell class] forCellWithReuseIdentifier:advertScrollViewOneCell];
-    [_collectionView registerClass:[SGAdvertScrollViewTwoCell class] forCellWithReuseIdentifier:advertScrollViewTwoCell];
-    [self addSubview:_collectionView];
+- (UIView *)separator {
+    if (!_separator) {
+        _separator = [[UIView alloc] init];
+        _separator.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.07];
+    }
+    return _separator;
+}
+
+- (UICollectionView *)collectionView {
+    if (!_collectionView) {
+        _flowLayout = [[UICollectionViewFlowLayout alloc] init];
+        _flowLayout.minimumLineSpacing = 0;
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:_flowLayout];
+        _collectionView.delegate = self;
+        _collectionView.dataSource = self;
+        _collectionView.scrollsToTop = NO;
+        _collectionView.scrollEnabled = NO;
+        _collectionView.pagingEnabled = YES;
+        _collectionView.showsVerticalScrollIndicator = NO;
+        _collectionView.backgroundColor = [UIColor clearColor];
+        // 注册
+        [_collectionView registerClass:[SGAdvertScrollViewOneCell class] forCellWithReuseIdentifier:advertScrollViewOneCell];
+        [_collectionView registerClass:[SGAdvertScrollViewTwoCell class] forCellWithReuseIdentifier:advertScrollViewTwoCell];
+    }
+    return _collectionView;
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    // 设置图片尺寸
-    if (self.advertScrollViewStyle == SGAdvertScrollViewStyleTwo) { // 左边提示图片根据图片尺寸距离顶部、底部间距为 5
-        CGFloat imageViewX = SGMargin;
-        CGFloat imageViewY = 0.5 * SGMargin;
-        CGFloat imageViewH = self.frame.size.height - 2 * imageViewY;
-        CGFloat imageViewW = imageViewH;
-        _imageView.frame = CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH);
-    } else { // 左边提示图片根据图片尺寸自适应
-        CGFloat imageViewW = _imageView.image.size.width;
-        CGFloat imageViewH = _imageView.image.size.height;
-        CGFloat imageViewX = SGMargin;
-        CGFloat imageViewY = 0.5 * (self.frame.size.height - imageViewH);
-        _imageView.frame = CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH);
-    }
+    /// 设置左边 image 的 frame，根据 image 大小的自动约束
+    CGFloat imageViewW = _imageView.image.size.width;
+    CGFloat imageViewH = _imageView.image.size.height;
+    CGFloat imageViewX = advertScrollViewSpeacing;
+    CGFloat imageViewY = 0.5 * (self.frame.size.height - imageViewH);
+    _imageView.frame = CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH);
     
-    // 设置分割线尺寸
-    CGFloat separatorX = CGRectGetMaxX(_imageView.frame) + 0.5 * SGMargin;
-    CGFloat separatorY = 0.7 * SGMargin;
-    CGFloat separatorW = 1;
-    CGFloat separatorH = self.frame.size.height - 2 * separatorY;
-    _separator.frame = CGRectMake(separatorX, separatorY, separatorW, separatorH);
-    
-    // 设置 collectionView 尺寸
+    /// 设置 collectionView 的 frame
     CGFloat collectionViewX = 0;
     CGFloat collectionViewY = 0;
-    if (self.isShowSeparator == NO) {
-        collectionViewX = CGRectGetMaxX(_imageView.frame) + SGMargin;
+    if (_isShowSeparator == NO) {
+        collectionViewX = CGRectGetMaxX(_imageView.frame) + advertScrollViewSpeacing;
     } else {
-        collectionViewX = CGRectGetMaxX(_separator.frame) + SGMargin;
+        [self addSubview:self.separator];
+        CGFloat separatorX = CGRectGetMaxX(_imageView.frame) + 0.5 * advertScrollViewSpeacing;
+        CGFloat separatorY = 0.7 * advertScrollViewSpeacing;
+        CGFloat separatorW = 1;
+        CGFloat separatorH = self.frame.size.height - 2 * separatorY;
+        _separator.frame = CGRectMake(separatorX, separatorY, separatorW, separatorH);
+        
+        collectionViewX = CGRectGetMaxX(_separator.frame) + advertScrollViewSpeacing;
     }
-    CGFloat collectionViewW = self.frame.size.width - collectionViewX - SGMargin;
+    CGFloat collectionViewW = self.frame.size.width - collectionViewX - advertScrollViewSpeacing;
     CGFloat collectionViewH = self.frame.size.height;
     _collectionView.frame = CGRectMake(collectionViewX, collectionViewY, collectionViewW, collectionViewH);
 
-    // 设置 UICollectionViewFlowLayout 尺寸
+    /// 设置 UICollectionViewFlowLayout 尺寸
     _flowLayout.itemSize = CGSizeMake(_collectionView.frame.size.width, _collectionView.frame.size.height);
     
-    // 默认显示最中间的那组
+    /// 默认显示最中间的那组 Section
     [self defaultSelectedScetion];
 }
 
 /// 默认选中的组
 - (void)defaultSelectedScetion {
-    if (self.tempTitleArr.count == 0) return; // 为解决加载数据延迟问题
+    if (self.tempTitleArr.count == 0) return;
     // 默认显示最中间的那组
-    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:SGMaxSections / 2] atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0.5 * advertScrollViewMaxSections] atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
 }
 
 #pragma mark - - - UICollectionView 的 dataSource 方法
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return SGMaxSections;
+    return advertScrollViewMaxSections;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -250,6 +254,12 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
     if (self.advertScrollViewStyle == SGAdvertScrollViewStyleTwo) {
         SGAdvertScrollViewTwoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:advertScrollViewTwoCell forIndexPath:indexPath];
         cell.topLabel.text = self.tempTitleArr[indexPath.row];
+        if (self.titleFont != nil) {
+            cell.topLabel.font = self.titleFont;
+        }
+        if (self.titleColor != nil) {
+            cell.topLabel.textColor = self.titleColor;
+        }
         NSString *imagePath = self.tempImageArr[indexPath.row];
         if ([imagePath hasPrefix:@"http"]) {
             [cell.signImageView sd_setImageWithURL:[NSURL URLWithString:imagePath]];
@@ -257,12 +267,6 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
             cell.signImageView.image = [UIImage imageNamed:imagePath];
         }
         cell.bottomLabel.text = self.tempBottomTitleArr[indexPath.row];
-        if (self.titleFont != nil) {
-            cell.topLabel.font = self.titleFont;
-        }
-        if (self.titleColor != nil) {
-            cell.topLabel.textColor = self.titleColor;
-        }
         if (self.bottomTitleFont != nil) {
             cell.bottomLabel.font = self.bottomTitleFont;
         }
@@ -289,26 +293,26 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
     }
 }
 
-/// 创建定时器
+#pragma mark - - - NSTimer
 - (void)addTimer {
     [self removeTimer];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:self.scrollTimeInterval target:self selector:@selector(beginUpdateUI) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
 }
-/// 移除定时器
+
 - (void)removeTimer {
     [_timer invalidate];
     _timer = nil;
 }
-#pragma mark - - - 定时器执行方法 - 更新UI
+
 - (void)beginUpdateUI {
-    if (self.tempTitleArr.count == 0) return; // 为解决加载网络图片延迟问题
+    if (self.tempTitleArr.count == 0) return;
 
     // 1、当前正在展示的位置
     NSIndexPath *currentIndexPath = [[self.collectionView indexPathsForVisibleItems] lastObject];
 
     // 马上显示回最中间那组的数据
-    NSIndexPath *resetCurrentIndexPath = [NSIndexPath indexPathForItem:currentIndexPath.item inSection:SGMaxSections / 2];
+    NSIndexPath *resetCurrentIndexPath = [NSIndexPath indexPathForItem:currentIndexPath.item inSection:0.5 * advertScrollViewMaxSections];
     [self.collectionView scrollToItemAtIndexPath:resetCurrentIndexPath atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
 
     // 2、计算出下一个需要展示的位置
@@ -325,12 +329,12 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 }
 
 #pragma mark - - - setting
-- (void)setLeftImageString:(NSString *)leftImageString {
-    _leftImageString = leftImageString;
-    if ([leftImageString hasPrefix:@"http"]) {
-        [_imageView sd_setImageWithURL:[NSURL URLWithString:leftImageString]];
+- (void)setLeftImageName:(NSString *)leftImageName {
+    _leftImageName = leftImageName;
+    if ([leftImageName hasPrefix:@"http"]) {
+        [_imageView sd_setImageWithURL:[NSURL URLWithString:leftImageName]];
     } else {
-        _imageView.image = [UIImage imageNamed:leftImageString];
+        _imageView.image = [UIImage imageNamed:leftImageName];
     }
 }
 
@@ -345,18 +349,23 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 
 - (void)setSignImages:(NSArray *)signImages {
     _signImages = signImages;
-    self.tempImageArr = [NSArray arrayWithArray:signImages];
+    if (signImages) {
+        self.tempImageArr = [NSArray arrayWithArray:signImages];
+    }
 }
 
 - (void)setBottomTitles:(NSArray *)bottomTitles {
     _bottomTitles = bottomTitles;
-    
-    self.tempBottomTitleArr = [NSArray arrayWithArray:bottomTitles];
+    if (bottomTitles) {
+        self.tempBottomTitleArr = [NSArray arrayWithArray:bottomTitles];
+    }
 }
 
 - (void)setScrollTimeInterval:(CGFloat)scrollTimeInterval {
     _scrollTimeInterval = scrollTimeInterval;
-    [self addTimer];
+    if (scrollTimeInterval) {
+        [self addTimer];
+    }
 }
 
 - (void)setIsShowSeparator:(BOOL)isShowSeparator {
@@ -369,14 +378,8 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 
 - (void)setSeparatorColor:(UIColor *)separatorColor {
     _separatorColor = separatorColor;
-    self.separator.backgroundColor = separatorColor;
-}
-
-- (void)setIsAutoScroll:(BOOL)isAutoScroll {
-    _isAutoScroll = isAutoScroll;
-    if (isAutoScroll == NO) {
-        [self removeTimer];
-        self.collectionView.scrollEnabled = YES;
+    if (separatorColor) {
+        self.separator.backgroundColor = separatorColor;
     }
 }
 

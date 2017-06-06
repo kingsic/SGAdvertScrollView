@@ -23,12 +23,13 @@
     // 例一
     SGAdvertScrollView *advertScrollView = [[SGAdvertScrollView alloc] init];
     advertScrollView.frame = CGRectMake(0, 150, self.view.frame.size.width, 30);
-    advertScrollView.titleColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+    advertScrollView.titleColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
     advertScrollView.scrollTimeInterval = 5;
-    advertScrollView.leftImageString = @"horn_icon";
+    advertScrollView.leftImageName = @"horn_icon";
     advertScrollView.titles = @[@"常见电商类 app 滚动播放广告信息", @"采用代理模式封装, 可进行事件点击处理", @"建议去 github 上下载"];
-    advertScrollView.titleFont = [UIFont systemFontOfSize:15];
+    advertScrollView.titleFont = [UIFont systemFontOfSize:14];
     advertScrollView.delegateAdvertScrollView = self;
+    advertScrollView.isShowSeparator = NO;
     [self.view addSubview:advertScrollView];
     
     
@@ -39,7 +40,7 @@
     
     SGAdvertScrollView *advertScrollView2 = [[SGAdvertScrollView alloc] init];
     advertScrollView2.frame = CGRectMake(0, 250, self.view.frame.size.width, 44);
-    advertScrollView2.leftImageString = @"Tmall_rendian";
+    advertScrollView2.leftImageName = @"Tmall_rendian";
     advertScrollView2.advertScrollViewStyle = SGAdvertScrollViewStyleTwo;
     advertScrollView2.titles = titleArr;
     advertScrollView2.signImages = signImageArr;
