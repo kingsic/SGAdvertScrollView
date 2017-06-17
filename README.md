@@ -17,25 +17,17 @@
 
 #### 例一
 ```Objective-C
-    SGAdvertScrollView *advertScrollView = [[SGAdvertScrollView alloc] init];
+    _advertScrollView.scrollTimeInterval = 5;
     
-    advertScrollView.frame = CGRectMake(0, 150, self.view.frame.size.width, 30);
+    _advertScrollView.titleColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
+
+    _advertScrollView.titles = @[@"常见电商类 app 滚动播放广告信息", @"采用代理模式封装, 可进行事件点击处理", @"建议去 github 上下载"];
     
-    advertScrollView.titleColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
+    _advertScrollView.titleFont = [UIFont systemFontOfSize:14];
     
-    advertScrollView.scrollTimeInterval = 5;
+    _advertScrollView.delegateAdvertScrollView = self;
     
-    advertScrollView.leftImageName = @"horn_icon";
-    
-    advertScrollView.titles = @[@"常见电商类 app 滚动播放广告信息", @"采用代理模式封装, 可进行事件点击处理", @"建议去 github 上下载"];
-    
-    advertScrollView.titleFont = [UIFont systemFontOfSize:14];
-    
-    advertScrollView.delegateAdvertScrollView = self;
-    
-    advertScrollView.isShowSeparator = NO;
-    
-    [self.view addSubview:advertScrollView];
+    _advertScrollView.isShowSeparator = NO;
 ```
 
 #### 代理方法
@@ -51,29 +43,21 @@
 
 #### 例二
 ```Objective-C
-    NSArray *titleArr = @[@"聚惠女王节，香米更低价满150减10", @"HTC新品首发，预约送大礼包", @"“挑食”进口生鲜，满199减20"];
+    NSArray *topTitleArr = @[@"聚惠女王节，香米更低价满150减10", @"HTC新品首发，预约送大礼包", @"“挑食”进口生鲜，满199减20"];
     
     NSArray *signImageArr = @[@"hot", @"", @"activity"];
     
     NSArray *bottomTitleArr = @[@"满150减10+满79减5", @"12期免息＋免费试用", @"领券满199减20+进口直达"] ;
     
-    SGAdvertScrollView *advertScrollView2 = [[SGAdvertScrollView alloc] init];
+    _advertScrollView2.advertScrollViewStyle = SGAdvertScrollViewStyleTwo;
     
-    advertScrollView2.frame = CGRectMake(0, 250, self.view.frame.size.width, 44);
+    _advertScrollView2.topTitles = topTitleArr;
     
-    advertScrollView2.leftImageName = @"Tmall_rendian";
+    _advertScrollView2.signImages = signImageArr;
     
-    advertScrollView2.advertScrollViewStyle = SGAdvertScrollViewStyleTwo;
+    _advertScrollView2.bottomTitles = bottomTitleArr;
     
-    advertScrollView2.titles = titleArr;
-    
-    advertScrollView2.signImages = signImageArr;
-    
-    advertScrollView2.bottomTitles = bottomTitleArr;
-    
-    advertScrollView2.bottomTitleColor = [UIColor redColor];
-    
-    [self.view addSubview:advertScrollView2];
+    _advertScrollView2.bottomTitleColor = [UIColor redColor];
 ```
 
 
