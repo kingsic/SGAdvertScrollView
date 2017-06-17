@@ -17,37 +17,29 @@
 #import "UIImageView+WebCache.h"
 
 @interface SGAdvertScrollViewOneCell : UICollectionViewCell
-@property (nonatomic, strong) UILabel *tipsLabel;
+@property (nonatomic, strong) UILabel *titleLabel;
 @end
 
 @implementation SGAdvertScrollViewOneCell
-
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor clearColor];
-
-        [self.contentView addSubview:self.tipsLabel];
+        
+        [self.contentView addSubview:self.titleLabel];
     }
     return self;
 }
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    self.tipsLabel.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-}
-
-- (UILabel *)tipsLabel {
-    if (!_tipsLabel) {
-        _tipsLabel = [[UILabel alloc] init];
-        _tipsLabel.textColor = [UIColor blackColor];
-        _tipsLabel.font = [UIFont systemFontOfSize:12];
+- (UILabel *)titleLabel {
+    if (!_titleLabel) {
+        _titleLabel = [[UILabel alloc] init];
+        _titleLabel.textColor = [UIColor blackColor];
+        _titleLabel.font = [UIFont systemFontOfSize:12];
+        _titleLabel.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
     }
-    return _tipsLabel;
+    return _titleLabel;
 }
-
 @end
 
-#pragma mark - - - SGAdvertScrollViewTwoCell
 @interface SGAdvertScrollViewTwoCell : UICollectionViewCell
 @property (nonatomic, strong) UILabel *topLabel;
 @property (nonatomic, strong) UIImageView *signImageView;
@@ -55,7 +47,6 @@
 @end
 
 @implementation SGAdvertScrollViewTwoCell
-
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor clearColor];
@@ -89,6 +80,10 @@
     CGFloat bottomLabelW = self.frame.size.width - bottomLabelX;
     CGFloat bottomLabelH = topLabelH;
     self.bottomLabel.frame = CGRectMake(bottomLabelX, bottomLabelY, bottomLabelW, bottomLabelH);
+    
+    CGPoint tempPoint = self.signImageView.center;
+    tempPoint.y = _bottomLabel.center.y;
+    _signImageView.center = tempPoint;
 }
 
 - (UILabel *)topLabel {
@@ -99,14 +94,12 @@
     }
     return _topLabel;
 }
-
 - (UIImageView *)signImageView {
     if (!_signImageView) {
         _signImageView = [[UIImageView alloc] init];
     }
     return _signImageView;
 }
-
 - (UILabel *)bottomLabel {
     if (!_bottomLabel) {
         _bottomLabel = [[UILabel alloc] init];
@@ -115,12 +108,9 @@
     }
     return _bottomLabel;
 }
-
 @end
 
-#pragma mark - - - SGAdvertScrollView
 @interface SGAdvertScrollView () <UICollectionViewDelegate, UICollectionViewDataSource>
-@property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIView *separator;
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -160,15 +150,7 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 }
 
 - (void)setupSubviews {
-    [self addSubview:self.imageView];
     [self addSubview:self.collectionView];
-}
-
-- (UIImageView *)imageView {
-    if (!_imageView) {
-        _imageView = [[UIImageView alloc] init];
-    }
-    return _imageView;
 }
 
 - (UIView *)separator {
@@ -201,21 +183,14 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    /// 设置左边 image 的 frame，根据 image 大小的自动约束
-    CGFloat imageViewW = _imageView.image.size.width;
-    CGFloat imageViewH = _imageView.image.size.height;
-    CGFloat imageViewX = advertScrollViewSpeacing;
-    CGFloat imageViewY = 0.5 * (self.frame.size.height - imageViewH);
-    _imageView.frame = CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH);
-    
     /// 设置 collectionView 的 frame
     CGFloat collectionViewX = 0;
     CGFloat collectionViewY = 0;
     if (_isShowSeparator == NO) {
-        collectionViewX = CGRectGetMaxX(_imageView.frame) + advertScrollViewSpeacing;
+        collectionViewX = 0;
     } else {
         [self addSubview:self.separator];
-        CGFloat separatorX = CGRectGetMaxX(_imageView.frame) + 0.5 * advertScrollViewSpeacing;
+        CGFloat separatorX = 0;
         CGFloat separatorY = 0.7 * advertScrollViewSpeacing;
         CGFloat separatorW = 1;
         CGFloat separatorH = self.frame.size.height - 2 * separatorY;
@@ -254,11 +229,15 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
     if (self.advertScrollViewStyle == SGAdvertScrollViewStyleTwo) {
         SGAdvertScrollViewTwoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:advertScrollViewTwoCell forIndexPath:indexPath];
         cell.topLabel.text = self.tempTitleArr[indexPath.row];
+        cell.bottomLabel.text = self.tempBottomTitleArr[indexPath.row];
+
         if (self.titleFont != nil) {
             cell.topLabel.font = self.titleFont;
+            cell.bottomLabel.font = self.titleFont;
         }
-        if (self.titleColor != nil) {
-            cell.topLabel.textColor = self.titleColor;
+        
+        if (self.topTitleColor != nil) {
+            cell.topLabel.textColor = self.topTitleColor;
         }
         NSString *imagePath = self.tempImageArr[indexPath.row];
         if ([imagePath hasPrefix:@"http"]) {
@@ -266,22 +245,19 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
         } else {
             cell.signImageView.image = [UIImage imageNamed:imagePath];
         }
-        cell.bottomLabel.text = self.tempBottomTitleArr[indexPath.row];
-        if (self.bottomTitleFont != nil) {
-            cell.bottomLabel.font = self.bottomTitleFont;
-        }
+
         if (self.bottomTitleColor != nil) {
             cell.bottomLabel.textColor = self.bottomTitleColor;
         }
         return cell;
     } else {
         SGAdvertScrollViewOneCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:advertScrollViewOneCell forIndexPath:indexPath];
-        cell.tipsLabel.text = self.tempTitleArr[indexPath.item];
+        cell.titleLabel.text = self.tempTitleArr[indexPath.item];
         if (self.titleFont != nil) {
-            cell.tipsLabel.font = self.titleFont;
+            cell.titleLabel.font = self.titleFont;
         }
         if (self.titleColor != nil) {
-            cell.tipsLabel.textColor = self.titleColor;
+            cell.titleLabel.textColor = self.titleColor;
         }
         return cell;
     }
@@ -329,21 +305,32 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 }
 
 #pragma mark - - - setting
-- (void)setLeftImageName:(NSString *)leftImageName {
-    _leftImageName = leftImageName;
-    if ([leftImageName hasPrefix:@"http"]) {
-        [_imageView sd_setImageWithURL:[NSURL URLWithString:leftImageName]];
-    } else {
-        _imageView.image = [UIImage imageNamed:leftImageName];
+- (void)setAdvertScrollViewStyle:(SGAdvertScrollViewStyle)advertScrollViewStyle {
+    _advertScrollViewStyle = advertScrollViewStyle;
+    if (advertScrollViewStyle == SGAdvertScrollViewStyleTwo) {
+        _advertScrollViewStyle = SGAdvertScrollViewStyleTwo;
     }
 }
 
 - (void)setTitles:(NSArray *)titles {
     _titles = titles;
-    if (titles.count == 0 || titles.count == 1) { // 数组为空或者数组个数为 1，停止滚动状态
+    if (titles.count == 0 || titles.count == 1) {
         [self removeTimer];
     }
     self.tempTitleArr = [NSArray arrayWithArray:titles];
+    [self.collectionView reloadData];
+}
+
+- (void)setTitleFont:(UIFont *)titleFont {
+    _titleFont = titleFont;
+}
+
+- (void)setTopTitles:(NSArray *)topTitles {
+    _topTitles = topTitles;
+    if (topTitles.count == 0 || topTitles.count == 1) {
+        [self removeTimer];
+    }
+    self.tempTitleArr = [NSArray arrayWithArray:topTitles];
     [self.collectionView reloadData];
 }
 
