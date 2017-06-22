@@ -35,7 +35,7 @@
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4AU-MA-rxA" customClass="SGAdvertScrollView">
                                         <rect key="frame" x="35" y="0.0" width="290" height="30"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="out-c3-VNJ">
                                         <rect key="frame" x="335" y="0.0" width="30" height="30"/>
@@ -71,20 +71,30 @@
                                         </constraints>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JJf-bI-2l7" customClass="SGAdvertScrollView">
-                                        <rect key="frame" x="50" y="0.0" width="315" height="44"/>
+                                        <rect key="frame" x="56" y="0.0" width="309" height="44"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hTE-Ol-fRL">
+                                        <rect key="frame" x="45" y="10" width="1" height="24"/>
+                                        <color key="backgroundColor" red="0.82352941180000006" green="0.82352941180000006" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="1" id="6rX-YL-ROc"/>
+                                        </constraints>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="JJf-bI-2l7" firstAttribute="leading" secondItem="mJT-sf-E9n" secondAttribute="trailing" constant="10" id="298-ww-auv"/>
                                     <constraint firstAttribute="height" constant="44" id="3cJ-wL-X7o"/>
                                     <constraint firstAttribute="trailing" secondItem="JJf-bI-2l7" secondAttribute="trailing" constant="10" id="4nA-9u-vw0"/>
                                     <constraint firstItem="mJT-sf-E9n" firstAttribute="leading" secondItem="PEB-0H-j8h" secondAttribute="leading" constant="5" id="GNp-fQ-2h2"/>
+                                    <constraint firstItem="hTE-Ol-fRL" firstAttribute="top" secondItem="PEB-0H-j8h" secondAttribute="top" constant="10" id="I92-cn-dDO"/>
                                     <constraint firstItem="mJT-sf-E9n" firstAttribute="top" secondItem="PEB-0H-j8h" secondAttribute="top" constant="5" id="Ovv-6Z-rfC"/>
+                                    <constraint firstItem="JJf-bI-2l7" firstAttribute="leading" secondItem="hTE-Ol-fRL" secondAttribute="trailing" constant="10" id="Xhc-e6-JcY"/>
                                     <constraint firstItem="JJf-bI-2l7" firstAttribute="top" secondItem="PEB-0H-j8h" secondAttribute="top" id="evV-qj-LOK"/>
                                     <constraint firstAttribute="bottom" secondItem="mJT-sf-E9n" secondAttribute="bottom" constant="5" id="hKy-99-mAd"/>
+                                    <constraint firstItem="hTE-Ol-fRL" firstAttribute="leading" secondItem="mJT-sf-E9n" secondAttribute="trailing" constant="5" id="mQI-QM-TtN"/>
                                     <constraint firstAttribute="bottom" secondItem="JJf-bI-2l7" secondAttribute="bottom" id="mZb-Wt-sH6"/>
+                                    <constraint firstAttribute="bottom" secondItem="hTE-Ol-fRL" secondAttribute="bottom" constant="10" id="zZT-RX-cx0"/>
                                 </constraints>
                             </view>
                         </subviews>

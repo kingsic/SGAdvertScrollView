@@ -13,7 +13,6 @@
 @interface ViewController () <SGAdvertScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet SGAdvertScrollView *advertScrollView;
 @property (weak, nonatomic) IBOutlet SGAdvertScrollView *advertScrollView2;
-
 @end
 
 @implementation ViewController
@@ -25,10 +24,9 @@
     // 例一
     _advertScrollView.titleColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
     _advertScrollView.scrollTimeInterval = 5;
-    _advertScrollView.titles = @[@"常见电商类 app 滚动播放广告信息", @"采用代理模式封装, 可进行事件点击处理", @"建议去 github 上下载"];
+    _advertScrollView.titles = @[@"京东、天猫等 app 首页常见的广告滚动视图", @"采用代理设计模式进行封装, 可进行事件点击处理", @"建议在 github 上下载"];
     _advertScrollView.titleFont = [UIFont systemFontOfSize:14];
-    _advertScrollView.delegateAdvertScrollView = self;
-    _advertScrollView.isShowSeparator = NO;
+    _advertScrollView.delegate = self;
     
     
     // 例二
@@ -37,7 +35,7 @@
     NSArray *bottomTitleArr = @[@"满150减10+满79减5", @"12期免息＋免费试用", @"领券满199减20+进口直达"] ;
     _advertScrollView2.advertScrollViewStyle = SGAdvertScrollViewStyleTwo;
     _advertScrollView2.topTitles = topTitleArr;
-    _advertScrollView2.signImages = signImageArr;
+    _advertScrollView2.bottomSignImages = signImageArr;
     _advertScrollView2.bottomTitles = bottomTitleArr;
     _advertScrollView2.bottomTitleColor = [UIColor redColor];
 }

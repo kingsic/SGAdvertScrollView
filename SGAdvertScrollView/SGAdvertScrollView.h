@@ -21,40 +21,44 @@ typedef enum : NSUInteger {
     SGAdvertScrollViewStyleTwo,
 } SGAdvertScrollViewStyle;
 
-/** delegateAdvertScrollView */
 @protocol SGAdvertScrollViewDelegate <NSObject>
+/**
+ *  delegate
+ *
+ *  @param index    item 对应的下标
+ */
 - (void)advertScrollView:(SGAdvertScrollView *)advertScrollView didSelectedItemAtIndex:(NSInteger)index;
 
 @end
 
 @interface SGAdvertScrollView : UIView
-/** delegateAdvertScrollView */
-@property (nonatomic, weak) id<SGAdvertScrollViewDelegate> delegateAdvertScrollView;
-/** SGAdvertScrollViewStyle */
+/** delegate */
+@property (nonatomic, weak) id<SGAdvertScrollViewDelegate> delegate;
+/** 默认 SGAdvertScrollViewStyleNormal 样式 */
 @property (nonatomic, assign) SGAdvertScrollViewStyle advertScrollViewStyle;
 /** 滚动时间间隔(默认 3s) */
 @property (nonatomic, assign) CGFloat scrollTimeInterval;
-/** SGAdvertScrollViewStyleNormal 样式时，才有效 */
+/** SGAdvertScrollViewStyleNormal 样式，才有效 */
+@property (nonatomic, strong) NSArray *signImages;
+/** SGAdvertScrollViewStyleNormal 样式，才有效 */
 @property (nonatomic, strong) NSArray *titles;
-/** 标题字体颜色(默认 黑色), SGAdvertScrollViewStyleNormal 样式时，才有效 */
+/** 标题字体颜色(默认 黑色), SGAdvertScrollViewStyleNormal 样式，才有效 */
 @property (nonatomic, strong) UIColor *titleColor;
 
-/** SGAdvertScrollViewStyleTwo 样式时，才有效 */
+/** SGAdvertScrollViewStyleTwo 样式，才有效 */
+@property (nonatomic, strong) NSArray *topSignImages;
+/** SGAdvertScrollViewStyleTwo 样式，才有效 */
 @property (nonatomic, strong) NSArray *topTitles;
-/** SGAdvertScrollViewStyleTwo 样式时，才有效 */
-@property (nonatomic, strong) NSArray *signImages;
-/** SGAdvertScrollViewStyleTwo 样式时，才有效 */
+/** SGAdvertScrollViewStyleTwo 样式，才有效 */
+@property (nonatomic, strong) NSArray *bottomSignImages;
+/** SGAdvertScrollViewStyleTwo 样式，才有效 */
 @property (nonatomic, strong) NSArray *bottomTitles;
-/** 标题字体颜色(默认 黑色), SGAdvertScrollViewStyleTwo 样式时，才有效 */
+/** 标题字体颜色(默认 黑色), SGAdvertScrollViewStyleTwo 样式，才有效 */
 @property (nonatomic, strong) UIColor *topTitleColor;
-/** 标题字体颜色(默认 黑色), SGAdvertScrollViewStyleTwo 样式时，才有效 */
+/** 标题字体颜色(默认 黑色), SGAdvertScrollViewStyleTwo 样式，才有效 */
 @property (nonatomic, strong) UIColor *bottomTitleColor;
 
 /** 标题字体大小(默认 12) */
 @property (nonatomic, strong) UIFont *titleFont;
-/** 是否显示分割线(默认为 YES) */
-@property (nonatomic, assign) BOOL isShowSeparator;
-/** 分割线颜色(默认 浅灰色) */
-@property (nonatomic, strong) UIColor *separatorColor;
 
 @end
