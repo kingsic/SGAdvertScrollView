@@ -16,18 +16,16 @@
 * 导入 #import "SGAdvertScrollView.h" 头文件
 
 #### 例一
-```Objective-C
-    _advertScrollView.scrollTimeInterval = 5;
-    
+```Objective-C    
     _advertScrollView.titleColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
 
     _advertScrollView.titles = @[@"常见电商类 app 滚动播放广告信息", @"采用代理模式封装, 可进行事件点击处理", @"建议去 github 上下载"];
     
     _advertScrollView.titleFont = [UIFont systemFontOfSize:14];
     
-    _advertScrollView.delegateAdvertScrollView = self;
-    
-    _advertScrollView.isShowSeparator = NO;
+    _advertScrollView.delegate = self;
+
+    _advertScrollView.scrollTimeInterval = 5;
 ```
 
 #### 代理方法
@@ -53,7 +51,7 @@
     
     _advertScrollView2.topTitles = topTitleArr;
     
-    _advertScrollView2.signImages = signImageArr;
+    _advertScrollView2.bottomSignImages = signImageArr;
     
     _advertScrollView2.bottomTitles = bottomTitleArr;
     

@@ -211,7 +211,8 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 
 - (void)initialization {
     _scrollTimeInterval = 3.0;
-
+    _isTextAlignmentCenter = NO;
+    
     [self addTimer];
     _advertScrollViewStyle = SGAdvertScrollViewStyleNormal;
 }
@@ -308,6 +309,9 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
         } else {
             cell.signImageView.image = [UIImage imageNamed:imagePath];
         }
+        if (self.isTextAlignmentCenter == YES) {
+            cell.titleLabel.textAlignment = NSTextAlignmentCenter;
+        }
         cell.titleLabel.text = self.titleArr[indexPath.item];
         if (self.titleFont != nil) {
             cell.titleLabel.font = self.titleFont;
@@ -386,6 +390,10 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 
 - (void)setTitleFont:(UIFont *)titleFont {
     _titleFont = titleFont;
+}
+
+- (void)setIsTextAlignmentCenter:(BOOL)isTextAlignmentCenter {
+    _isTextAlignmentCenter = isTextAlignmentCenter;
 }
 
 - (void)setTopSignImages:(NSArray *)topSignImages {

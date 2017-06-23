@@ -44,6 +44,8 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSArray *titles;
 /** 标题字体颜色(默认 黑色), SGAdvertScrollViewStyleNormal 样式，才有效 */
 @property (nonatomic, strong) UIColor *titleColor;
+/** 标题文字是否居中，不对 signImages 有效，(默认为 No) */
+@property (nonatomic, assign) BOOL isTextAlignmentCenter;
 
 /** SGAdvertScrollViewStyleTwo 样式，才有效 */
 @property (nonatomic, strong) NSArray *topSignImages;
