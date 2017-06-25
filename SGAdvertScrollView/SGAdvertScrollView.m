@@ -14,7 +14,7 @@
 //  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
 
 #import "SGAdvertScrollView.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface SGAdvertScrollViewOneCell : UICollectionViewCell
 @property (nonatomic, strong) UIImageView *signImageView;
