@@ -233,7 +233,6 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
         _collectionView.pagingEnabled = YES;
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.backgroundColor = [UIColor clearColor];
-        // 注册
         [_collectionView registerClass:[SGAdvertScrollViewOneCell class] forCellWithReuseIdentifier:advertScrollViewOneCell];
         [_collectionView registerClass:[SGAdvertScrollViewTwoCell class] forCellWithReuseIdentifier:advertScrollViewTwoCell];
     }
@@ -254,14 +253,13 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
     [self defaultSelectedScetion];
 }
 
-/// 默认选中的组
 - (void)defaultSelectedScetion {
     if (self.titleArr.count == 0) return;
 
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0.5 * advertScrollViewMaxSections] atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
 }
 
-#pragma mark - - - UICollectionView 的 dataSource 方法
+#pragma mark - - - UICollectionView 的 dataSource、delegate方法
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return advertScrollViewMaxSections;
 }
@@ -301,6 +299,7 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
             cell.bottomLabel.textColor = self.bottomTitleColor;
         }
         return cell;
+        
     } else {
         SGAdvertScrollViewOneCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:advertScrollViewOneCell forIndexPath:indexPath];
         NSString *imagePath = self.imageArr[indexPath.item];
