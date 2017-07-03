@@ -1,17 +1,15 @@
 //
+//  如遇到问题或有更好方案，请通过以下方式进行联系
+//      QQ：1357127436
+//      Email：kingsic@126.com
+//      GitHub：(https://github.com/kingsic/SGAdvertScrollView.git）
+//
 //  SGAdvertScrollView.h
 //  SGAdvertScrollView
 //
 //  Created by Sorgle on 17/3/8.
 //  Copyright © 2017年 Sorgle. All rights reserved.
 //
-//  - - - - - - - - - - - - - - 交流QQ：1357127436 - - - - - - - - - - - - - - - //
-//
-//  - - 如在使用中, 遇到什么问题或者有更好建议者, 请于 kingsic@126.com 邮箱联系 - - - - //
-//  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//  - - GitHub下载地址 https://github.com/kingsic/SGAdvertScrollView.git - — - - //
-//
-//  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
 
 #import <UIKit/UIKit.h>
 @class SGAdvertScrollView;
@@ -22,11 +20,7 @@ typedef enum : NSUInteger {
 } SGAdvertScrollViewStyle;
 
 @protocol SGAdvertScrollViewDelegate <NSObject>
-/**
- *  delegate
- *
- *  @param index    item 对应的下标
- */
+/// delegate
 - (void)advertScrollView:(SGAdvertScrollView *)advertScrollView didSelectedItemAtIndex:(NSInteger)index;
 
 @end
@@ -44,7 +38,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSArray *titles;
 /** 标题字体颜色(默认 黑色), SGAdvertScrollViewStyleNormal 样式，才有效 */
 @property (nonatomic, strong) UIColor *titleColor;
-/** 标题文字是否居中，不对 signImages 有效，(默认为 No) */
+/** 标题文字是否居中，不对 signImages 起作用，(默认为 No) */
 @property (nonatomic, assign) BOOL isTextAlignmentCenter;
 
 /** SGAdvertScrollViewStyleTwo 样式，才有效 */
