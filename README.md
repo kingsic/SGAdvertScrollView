@@ -4,16 +4,19 @@
 ![](https://github.com/kingsic/SGAdvertScrollView/raw/master/Gif/sorgle.gif) 
 
 
-### 所用到的第三方
+### Dependency
 
 [SDWebImage](https://github.com/rs/SDWebImage.git)
 
 
+## SGAdvertScrollView 集成
+
+* 1、CocoaPods 导入 pod 'SGAdvertScrollView'”
+
+* 2、下载、拖拽 “SGAdvertScrollView” 文件夹到工程中
+
+
 ## 代码介绍
-
-* 将项目中 SGAdvertScrollView 文件夹导入工程
-
-* 导入 #import "SGAdvertScrollView.h" 头文件
 
 #### 例一
 ```Objective-C    
