@@ -329,7 +329,8 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 #pragma mark - - - NSTimer
 - (void)addTimer {
     [self removeTimer];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:self.scrollTimeInterval target:self selector:@selector(beginUpdateUI) userInfo:nil repeats:YES];
+
+    self.timer = [NSTimer timerWithTimeInterval:self.scrollTimeInterval target:self selector:@selector(beginUpdateUI) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
 }
 
@@ -380,6 +381,8 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
     _titles = titles;
     if (titles.count == 0 || titles.count == 1) {
         [self removeTimer];
+    } else {
+        [self addTimer];
     }
     self.titleArr = [NSArray arrayWithArray:titles];
     [self.collectionView reloadData];
@@ -404,6 +407,8 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
     _topTitles = topTitles;
     if (topTitles.count == 0 || topTitles.count == 1) {
         [self removeTimer];
+    } else {
+        [self addTimer];
     }
     self.titleArr = [NSArray arrayWithArray:topTitles];
     [self.collectionView reloadData];

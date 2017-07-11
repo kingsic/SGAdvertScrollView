@@ -1,8 +1,8 @@
 
 Pod::Spec.new do |s|
     s.name         = 'SGAdvertScrollView'
-    s.version      = '1.1.6'
-    s.summary      = '广告滚动视图'
+    s.version      = '1.1.7'
+    s.summary      = 'iOS advertisement carousel view'
     s.homepage     = 'https://github.com/kingsic/SGAdvertScrollView'
     s.license      = 'MIT'
     s.authors      = {'kingsic' => 'kingsic@126.com'}
