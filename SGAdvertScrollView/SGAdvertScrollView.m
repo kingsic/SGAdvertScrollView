@@ -2,7 +2,7 @@
 //  如遇到问题或有更好方案，请通过以下方式进行联系
 //      QQ：1357127436
 //      Email：kingsic@126.com
-//      GitHub：(https://github.com/kingsic/SGAdvertScrollView.git）
+//      GitHub：https://github.com/kingsic/SGAdvertScrollView.git
 //
 //  SGAdvertScrollView.m
 //  SGAdvertScrollView
@@ -69,7 +69,6 @@
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.textColor = [UIColor blackColor];
         _titleLabel.font = [UIFont systemFontOfSize:12];
-        _titleLabel.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
     }
     return _titleLabel;
 }
@@ -207,6 +206,17 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
     return self;
 }
 
+- (void)willMoveToSuperview:(UIView *)newSuperview {
+    if (!newSuperview) {
+        [self removeTimer];
+    }
+}
+
+- (void)dealloc {
+    _collectionView.delegate = nil;
+    _collectionView.dataSource = nil;
+}
+
 - (void)initialization {
     _scrollTimeInterval = 3.0;
     _isTextAlignmentCenter = NO;
@@ -216,6 +226,9 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 }
 
 - (void)setupSubviews {
+    UIView *tempView = [[UIView alloc] initWithFrame:CGRectZero];
+    [self addSubview:tempView];
+    
     [self addSubview:self.collectionView];
 }
 
@@ -223,7 +236,8 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
     if (!_collectionView) {
         _flowLayout = [[UICollectionViewFlowLayout alloc] init];
         _flowLayout.minimumLineSpacing = 0;
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:_flowLayout];
+        
+        _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds collectionViewLayout:_flowLayout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         _collectionView.scrollsToTop = NO;
@@ -232,7 +246,6 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.backgroundColor = [UIColor clearColor];
         [_collectionView registerClass:[SGAdvertScrollViewOneCell class] forCellWithReuseIdentifier:advertScrollViewOneCell];
-        [_collectionView registerClass:[SGAdvertScrollViewTwoCell class] forCellWithReuseIdentifier:advertScrollViewTwoCell];
     }
     return _collectionView;
 }
@@ -240,20 +253,15 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    CGFloat collectionViewX = 0;
-    CGFloat collectionViewY = 0;
-    CGFloat collectionViewW = self.frame.size.width;
-    CGFloat collectionViewH = self.frame.size.height;
-    _collectionView.frame = CGRectMake(collectionViewX, collectionViewY, collectionViewW, collectionViewH);
-
-    _flowLayout.itemSize = CGSizeMake(_collectionView.frame.size.width, _collectionView.frame.size.height);
+    _flowLayout.itemSize = CGSizeMake(self.frame.size.width, self.frame.size.height);
+    _collectionView.frame = self.bounds;
     
-    [self defaultSelectedScetion];
+    if (self.titleArr.count > 1) {
+        [self defaultSelectedScetion];
+    }
 }
 
 - (void)defaultSelectedScetion {
-    if (self.titleArr.count == 0) return;
-
     [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0.5 * advertScrollViewMaxSections] atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
 }
 
@@ -340,11 +348,9 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 }
 
 - (void)beginUpdateUI {
-    if (self.titleArr.count == 0) return;
-
     // 1、当前正在展示的位置
     NSIndexPath *currentIndexPath = [[self.collectionView indexPathsForVisibleItems] lastObject];
-
+    
     // 马上显示回最中间那组的数据
     NSIndexPath *resetCurrentIndexPath = [NSIndexPath indexPathForItem:currentIndexPath.item inSection:0.5 * advertScrollViewMaxSections];
     [self.collectionView scrollToItemAtIndexPath:resetCurrentIndexPath atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
@@ -358,6 +364,7 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
     }
 
     NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:nextItem inSection:nextSection];
+
     // 3、通过动画滚动到下一个位置
     [self.collectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionBottom animated:YES];
 }
@@ -367,6 +374,7 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
     _advertScrollViewStyle = advertScrollViewStyle;
     if (advertScrollViewStyle == SGAdvertScrollViewStyleTwo) {
         _advertScrollViewStyle = SGAdvertScrollViewStyleTwo;
+        [_collectionView registerClass:[SGAdvertScrollViewTwoCell class] forCellWithReuseIdentifier:advertScrollViewTwoCell];
     }
 }
 
@@ -379,11 +387,12 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 
 - (void)setTitles:(NSArray *)titles {
     _titles = titles;
-    if (titles.count == 0 || titles.count == 1) {
-        [self removeTimer];
-    } else {
+    if (titles.count > 1) {
         [self addTimer];
+    } else {
+        [self removeTimer];
     }
+    
     self.titleArr = [NSArray arrayWithArray:titles];
     [self.collectionView reloadData];
 }
@@ -405,11 +414,12 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 
 - (void)setTopTitles:(NSArray *)topTitles {
     _topTitles = topTitles;
-    if (topTitles.count == 0 || topTitles.count == 1) {
-        [self removeTimer];
-    } else {
+    if (topTitles.count > 1) {
         [self addTimer];
+    } else {
+        [self removeTimer];
     }
+    
     self.titleArr = [NSArray arrayWithArray:topTitles];
     [self.collectionView reloadData];
 }
