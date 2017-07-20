@@ -5,10 +5,10 @@
 //      GitHub：https://github.com/kingsic/SGAdvertScrollView.git
 //
 //  SGAdvertScrollView.m
-//  SGAdvertScrollView
+//  SGAdvertScrollViewExample
 //
-//  Created by Sorgle on 17/3/8.
-//  Copyright © 2017年 Sorgle. All rights reserved.
+//  Created by kingsic on 17/3/8.
+//  Copyright © 2017年 kingsic. All rights reserved.
 //
 
 #import "SGAdvertScrollView.h"
