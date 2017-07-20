@@ -16,19 +16,13 @@
 * 2、下载、拖拽 “SGAdvertScrollView” 文件夹到工程中
 
 
-## 代码介绍
+## 代码介绍（详细使用，请参考 Demo）
 
 #### 例一
 ```Objective-C    
-    _advertScrollView.titleColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
-
     _advertScrollView.titles = @[@"常见电商类 app 滚动播放广告信息", @"采用代理模式封装, 可进行事件点击处理", @"建议去 github 上下载"];
-    
-    _advertScrollView.titleFont = [UIFont systemFontOfSize:14];
-    
+        
     _advertScrollView.delegate = self;
-
-    _advertScrollView.scrollTimeInterval = 5;
 ```
 
 #### 代理方法
@@ -46,7 +40,7 @@
 ```Objective-C
     NSArray *topTitleArr = @[@"聚惠女王节，香米更低价满150减10", @"HTC新品首发，预约送大礼包", @"“挑食”进口生鲜，满199减20"];
     
-    NSArray *signImageArr = @[@"hot", @"", @"activity"];
+    NSArray *bottomSignImageArr = @[@"hot", @"", @"activity"];
     
     NSArray *bottomTitleArr = @[@"满150减10+满79减5", @"12期免息＋免费试用", @"领券满199减20+进口直达"] ;
     
@@ -54,12 +48,17 @@
     
     _advertScrollView2.topTitles = topTitleArr;
     
-    _advertScrollView2.bottomSignImages = signImageArr;
+    _advertScrollView2.bottomSignImages = bottomSignImageArr;
     
     _advertScrollView2.bottomTitles = bottomTitleArr;
     
     _advertScrollView2.bottomTitleColor = [UIColor redColor];
 ```
+
+
+## 版本介绍
+
+* 2017-7-20 --> v 1.1.8 修复 UICollectionView 偏移量问题
 
 
 ## Concluding remarks
