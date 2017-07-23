@@ -11,7 +11,7 @@
 
 ## SGAdvertScrollView 集成
 
-* 1、CocoaPods 导入 pod 'SGAdvertScrollView'”
+* 1、CocoaPods 导入 pod 'SGAdvertScrollView'
 
 * 2、下载、拖拽 “SGAdvertScrollView” 文件夹到工程中
 
