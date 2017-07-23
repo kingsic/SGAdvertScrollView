@@ -58,7 +58,7 @@
 
 ## 版本介绍
 
-* 2017-7-20 --> v 1.1.8 修复 UICollectionView 偏移量问题
+* 2017-7-20 --> v1.1.8 修复 UICollectionView 偏移量问题
 
 
 ## Concluding remarks
