@@ -1,4 +1,7 @@
 
+# SGAdvertScrollView
+
+
 ## 效果图
 
 ![](https://github.com/kingsic/SGAdvertScrollView/raw/master/Gif/sorgle.gif) 
@@ -44,7 +47,7 @@
     
     NSArray *bottomTitleArr = @[@"满150减10+满79减5", @"12期免息＋免费试用", @"领券满199减20+进口直达"] ;
     
-    _advertScrollView2.advertScrollViewStyle = SGAdvertScrollViewStyleTwo;
+    _advertScrollView2.advertScrollViewStyle = SGAdvertScrollViewStyleMore;
     
     _advertScrollView2.topTitles = topTitleArr;
     
@@ -59,6 +62,8 @@
 ## 版本介绍
 
 * 2017-7-20 --> v1.1.8 修复 UICollectionView 偏移量问题
+
+* 2017-8-2 --> v1.2.0 解决标题无数据引起的崩溃问题
 
 
 ## Concluding remarks
