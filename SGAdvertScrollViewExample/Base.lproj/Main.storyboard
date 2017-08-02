@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="U6V-ha-niI">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F2073" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="U6V-ha-niI">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -24,8 +24,52 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_image" translatesAutoresizingMaskIntoConstraints="NO" id="lZX-fY-goO">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OYv-Lx-Bfz">
-                                <rect key="frame" x="0.0" y="214" width="375" height="30"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uaE-RQ-a1M" userLabel="topView" customClass="SGAdvertScrollView">
+                                <rect key="frame" x="0.0" y="114" width="375" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="W7d-aH-FYf"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cSh-Nx-bUc">
+                                <rect key="frame" x="0.0" y="194" width="375" height="30"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="horn_icon" translatesAutoresizingMaskIntoConstraints="NO" id="ygo-bY-0v3">
+                                        <rect key="frame" x="5" y="7" width="20" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="20" id="Ouc-ac-0Mc"/>
+                                        </constraints>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v0I-n8-Za5">
+                                        <rect key="frame" x="30" y="5" width="1" height="20"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="1" id="8Ly-dv-QQU"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Gj9-aF-vgo" customClass="SGAdvertScrollView">
+                                        <rect key="frame" x="36" y="0.0" width="339" height="30"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="ygo-bY-0v3" secondAttribute="bottom" constant="7" id="3ji-Um-6gH"/>
+                                    <constraint firstItem="v0I-n8-Za5" firstAttribute="top" secondItem="cSh-Nx-bUc" secondAttribute="top" constant="5" id="4X0-ke-ro8"/>
+                                    <constraint firstItem="ygo-bY-0v3" firstAttribute="leading" secondItem="cSh-Nx-bUc" secondAttribute="leading" constant="5" id="CoM-GO-zoG"/>
+                                    <constraint firstAttribute="height" constant="30" id="Czc-yg-KVM"/>
+                                    <constraint firstItem="Gj9-aF-vgo" firstAttribute="top" secondItem="cSh-Nx-bUc" secondAttribute="top" id="GTZ-ym-3Vb"/>
+                                    <constraint firstAttribute="bottom" secondItem="v0I-n8-Za5" secondAttribute="bottom" constant="5" id="Hzl-SN-1rJ"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="UgY-Ug-aqD"/>
+                                    <constraint firstAttribute="bottom" secondItem="Gj9-aF-vgo" secondAttribute="bottom" id="af3-Xi-O1i"/>
+                                    <constraint firstItem="ygo-bY-0v3" firstAttribute="top" secondItem="cSh-Nx-bUc" secondAttribute="top" constant="7" id="azX-Lg-6iY"/>
+                                    <constraint firstItem="Gj9-aF-vgo" firstAttribute="leading" secondItem="v0I-n8-Za5" secondAttribute="trailing" constant="5" id="bl2-ee-MfH"/>
+                                    <constraint firstItem="v0I-n8-Za5" firstAttribute="leading" secondItem="ygo-bY-0v3" secondAttribute="trailing" constant="5" id="pAH-9n-w0i"/>
+                                    <constraint firstAttribute="trailing" secondItem="Gj9-aF-vgo" secondAttribute="trailing" id="vaO-4T-cRU"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OYv-Lx-Bfz" userLabel="centerView">
+                                <rect key="frame" x="0.0" y="274" width="375" height="30"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="horn_icon" translatesAutoresizingMaskIntoConstraints="NO" id="Q3s-BZ-i3P">
                                         <rect key="frame" x="5" y="7" width="20" height="16"/>
@@ -62,7 +106,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PEB-0H-j8h">
-                                <rect key="frame" x="0.0" y="304" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="364" width="375" height="44"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Tmall_rendian" translatesAutoresizingMaskIntoConstraints="NO" id="mJT-sf-E9n">
                                         <rect key="frame" x="5" y="5" width="35" height="34"/>
@@ -97,25 +141,65 @@
                                     <constraint firstAttribute="bottom" secondItem="hTE-Ol-fRL" secondAttribute="bottom" constant="10" id="zZT-RX-cx0"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QkF-18-A6m" userLabel="bottomView">
+                                <rect key="frame" x="0.0" y="458" width="375" height="50"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Tmall_rendian" translatesAutoresizingMaskIntoConstraints="NO" id="Pbw-EU-1Ex">
+                                        <rect key="frame" x="5" y="5" width="40" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="bmb-B1-ejw"/>
+                                        </constraints>
+                                    </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Btb-Rb-XnT" customClass="SGAdvertScrollView">
+                                        <rect key="frame" x="50" y="0.0" width="320" height="50"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="Pbw-EU-1Ex" secondAttribute="bottom" constant="5" id="79I-dz-0MN"/>
+                                    <constraint firstItem="Btb-Rb-XnT" firstAttribute="leading" secondItem="Pbw-EU-1Ex" secondAttribute="trailing" constant="5" id="Hbq-8F-zXj"/>
+                                    <constraint firstItem="Pbw-EU-1Ex" firstAttribute="leading" secondItem="QkF-18-A6m" secondAttribute="leading" constant="5" id="TrI-zf-wmT"/>
+                                    <constraint firstAttribute="height" constant="50" id="WcE-NK-c9N"/>
+                                    <constraint firstAttribute="trailing" secondItem="Btb-Rb-XnT" secondAttribute="trailing" constant="5" id="apv-Al-860"/>
+                                    <constraint firstItem="Pbw-EU-1Ex" firstAttribute="top" secondItem="QkF-18-A6m" secondAttribute="top" constant="5" id="ok5-Xw-C55"/>
+                                    <constraint firstAttribute="bottom" secondItem="Btb-Rb-XnT" secondAttribute="bottom" id="sSo-mH-r1k"/>
+                                    <constraint firstItem="Btb-Rb-XnT" firstAttribute="top" secondItem="QkF-18-A6m" secondAttribute="top" id="tJn-jv-1MS"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="OYv-Lx-Bfz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="3Uq-Md-Yv6"/>
-                            <constraint firstItem="OYv-Lx-Bfz" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="150" id="5Tl-vI-Eaf"/>
+                            <constraint firstItem="QkF-18-A6m" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="3fb-HP-ssU"/>
                             <constraint firstAttribute="trailing" secondItem="lZX-fY-goO" secondAttribute="trailing" id="5pn-Ok-OfO"/>
+                            <constraint firstAttribute="trailing" secondItem="OYv-Lx-Bfz" secondAttribute="trailing" id="BsN-rr-gyI"/>
                             <constraint firstItem="lZX-fY-goO" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Ftw-0f-cUM"/>
                             <constraint firstItem="PEB-0H-j8h" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Qrw-Tl-x5K"/>
+                            <constraint firstAttribute="trailing" secondItem="QkF-18-A6m" secondAttribute="trailing" id="T3p-0s-glf"/>
+                            <constraint firstItem="OYv-Lx-Bfz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="UKq-5c-asS"/>
+                            <constraint firstItem="OYv-Lx-Bfz" firstAttribute="top" secondItem="cSh-Nx-bUc" secondAttribute="bottom" constant="50" id="XB3-ll-tVa"/>
                             <constraint firstItem="PEB-0H-j8h" firstAttribute="top" secondItem="OYv-Lx-Bfz" secondAttribute="bottom" constant="60" id="Yh4-uq-IlY"/>
+                            <constraint firstAttribute="trailing" secondItem="cSh-Nx-bUc" secondAttribute="trailing" id="ZBG-r9-MfC"/>
+                            <constraint firstAttribute="trailing" secondItem="uaE-RQ-a1M" secondAttribute="trailing" id="ZnI-Oa-BAD"/>
+                            <constraint firstItem="uaE-RQ-a1M" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="aAG-as-bzm"/>
                             <constraint firstAttribute="trailing" secondItem="OYv-Lx-Bfz" secondAttribute="trailing" id="fbP-ev-iTq"/>
+                            <constraint firstItem="cSh-Nx-bUc" firstAttribute="top" secondItem="uaE-RQ-a1M" secondAttribute="bottom" constant="50" id="kPy-Wc-fUW"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="lZX-fY-goO" secondAttribute="bottom" id="mL9-no-sb3"/>
+                            <constraint firstItem="uaE-RQ-a1M" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="50" id="pTD-Of-9fI"/>
+                            <constraint firstItem="QkF-18-A6m" firstAttribute="top" secondItem="PEB-0H-j8h" secondAttribute="bottom" constant="50" id="qDx-cW-QHZ"/>
+                            <constraint firstItem="cSh-Nx-bUc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="qKQ-c4-R6G"/>
                             <constraint firstItem="lZX-fY-goO" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="sYT-Ac-bgE"/>
                             <constraint firstAttribute="trailing" secondItem="PEB-0H-j8h" secondAttribute="trailing" id="zhZ-Mu-kYE"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="SGAdvertScrollView" id="28T-79-Vph"/>
                     <connections>
-                        <outlet property="advertScrollView" destination="4AU-MA-rxA" id="jbZ-qu-dzb"/>
+                        <outlet property="advertScrollView" destination="Gj9-aF-vgo" id="xAD-k6-kw6"/>
                         <outlet property="advertScrollView2" destination="JJf-bI-2l7" id="chl-0a-7Lk"/>
+                        <outlet property="advertScrollViewBottom" destination="Btb-Rb-XnT" id="EhD-VU-hDp"/>
+                        <outlet property="advertScrollViewCenter" destination="4AU-MA-rxA" id="49A-w4-wg4"/>
+                        <outlet property="advertScrollViewTop" destination="uaE-RQ-a1M" id="fyJ-gS-Qnw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

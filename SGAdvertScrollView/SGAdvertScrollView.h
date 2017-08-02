@@ -5,7 +5,7 @@
 //      GitHub：https://github.com/kingsic/SGAdvertScrollView.git
 //
 //  SGAdvertScrollView.h
-//  SGAdvertScrollViewExample
+//  Version 1.2.0
 //
 //  Created by kingsic on 17/3/8.
 //  Copyright © 2017年 kingsic. All rights reserved.
@@ -16,7 +16,7 @@
 
 typedef enum : NSUInteger {
     SGAdvertScrollViewStyleNormal,
-    SGAdvertScrollViewStyleTwo,
+    SGAdvertScrollViewStyleMore,
 } SGAdvertScrollViewStyle;
 
 @protocol SGAdvertScrollViewDelegate <NSObject>
@@ -31,7 +31,7 @@ typedef enum : NSUInteger {
 /** 默认 SGAdvertScrollViewStyleNormal 样式 */
 @property (nonatomic, assign) SGAdvertScrollViewStyle advertScrollViewStyle;
 /** 滚动时间间隔(默认 3s) */
-@property (nonatomic, assign) CGFloat scrollTimeInterval;
+@property (nonatomic, assign) CFTimeInterval scrollTimeInterval;
 /** SGAdvertScrollViewStyleNormal 样式，才有效 */
 @property (nonatomic, strong) NSArray *signImages;
 /** SGAdvertScrollViewStyleNormal 样式，才有效 */

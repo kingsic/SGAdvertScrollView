@@ -14,6 +14,8 @@
 #import "SGAdvertScrollView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
+static NSInteger const advertScrollViewTitleFont = 13;
+
 @interface SGAdvertScrollViewOneCell : UICollectionViewCell
 @property (nonatomic, strong) UIImageView *signImageView;
 @property (nonatomic, strong) UILabel *titleLabel;
@@ -68,7 +70,7 @@
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.textColor = [UIColor blackColor];
-        _titleLabel.font = [UIFont systemFontOfSize:12];
+        _titleLabel.font = [UIFont systemFontOfSize:advertScrollViewTitleFont];
     }
     return _titleLabel;
 }
@@ -153,7 +155,7 @@
     if (!_topLabel) {
         _topLabel = [[UILabel alloc] init];
         _topLabel.textColor = [UIColor blackColor];
-        _topLabel.font = [UIFont systemFontOfSize:12];
+        _topLabel.font = [UIFont systemFontOfSize:advertScrollViewTitleFont];
     }
     return _topLabel;
 }
@@ -169,7 +171,7 @@
     if (!_bottomLabel) {
         _bottomLabel = [[UILabel alloc] init];
         _bottomLabel.textColor = [UIColor blackColor];
-        _bottomLabel.font = [UIFont systemFontOfSize:12];
+        _bottomLabel.font = [UIFont systemFontOfSize:advertScrollViewTitleFont];
     }
     return _bottomLabel;
 }
@@ -187,7 +189,7 @@
 
 @implementation SGAdvertScrollView
 
-static NSUInteger  const advertScrollViewMaxSections = 100;
+static NSInteger const advertScrollViewMaxSections = 100;
 static NSString *const advertScrollViewOneCell = @"SGAdvertScrollViewOneCell";
 static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 
@@ -275,7 +277,7 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.advertScrollViewStyle == SGAdvertScrollViewStyleTwo) {
+    if (self.advertScrollViewStyle == SGAdvertScrollViewStyleMore) {
         SGAdvertScrollViewTwoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:advertScrollViewTwoCell forIndexPath:indexPath];
         NSString *topImagePath = self.imageArr[indexPath.item];
         if ([topImagePath hasPrefix:@"http"]) {
@@ -348,6 +350,8 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 }
 
 - (void)beginUpdateUI {
+    if (self.titleArr.count == 0) return;
+    
     // 1、当前正在展示的位置
     NSIndexPath *currentIndexPath = [[self.collectionView indexPathsForVisibleItems] lastObject];
     
@@ -372,8 +376,8 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 #pragma mark - - - setting
 - (void)setAdvertScrollViewStyle:(SGAdvertScrollViewStyle)advertScrollViewStyle {
     _advertScrollViewStyle = advertScrollViewStyle;
-    if (advertScrollViewStyle == SGAdvertScrollViewStyleTwo) {
-        _advertScrollViewStyle = SGAdvertScrollViewStyleTwo;
+    if (advertScrollViewStyle == SGAdvertScrollViewStyleMore) {
+        _advertScrollViewStyle = SGAdvertScrollViewStyleMore;
         [_collectionView registerClass:[SGAdvertScrollViewTwoCell class] forCellWithReuseIdentifier:advertScrollViewTwoCell];
     }
 }
@@ -438,7 +442,7 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
     }
 }
 
-- (void)setScrollTimeInterval:(CGFloat)scrollTimeInterval {
+- (void)setScrollTimeInterval:(CFTimeInterval)scrollTimeInterval {
     _scrollTimeInterval = scrollTimeInterval;
     if (scrollTimeInterval) {
         [self addTimer];
