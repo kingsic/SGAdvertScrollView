@@ -38,23 +38,23 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSArray *titles;
 /** 标题字体颜色(默认 黑色), SGAdvertScrollViewStyleNormal 样式，才有效 */
 @property (nonatomic, strong) UIColor *titleColor;
-/** 标题文字是否居中，不对 signImages 起作用，(默认为 No) */
+/** 标题文字是否居中 (默认为 No)，SGAdvertScrollViewStyleNormal 样式，才有效且不对 signImages 起作用 */
 @property (nonatomic, assign) BOOL isTextAlignmentCenter;
 
-/** SGAdvertScrollViewStyleTwo 样式，才有效 */
+/** SGAdvertScrollViewStyleMore 样式，才有效 */
 @property (nonatomic, strong) NSArray *topSignImages;
-/** SGAdvertScrollViewStyleTwo 样式，才有效 */
+/** SGAdvertScrollViewStyleMore 样式，才有效 */
 @property (nonatomic, strong) NSArray *topTitles;
-/** SGAdvertScrollViewStyleTwo 样式，才有效 */
+/** SGAdvertScrollViewStyleMore 样式，才有效 */
 @property (nonatomic, strong) NSArray *bottomSignImages;
-/** SGAdvertScrollViewStyleTwo 样式，才有效 */
+/** SGAdvertScrollViewStyleMore 样式，才有效 */
 @property (nonatomic, strong) NSArray *bottomTitles;
-/** 标题字体颜色(默认 黑色), SGAdvertScrollViewStyleTwo 样式，才有效 */
+/** 标题字体颜色(默认 黑色), SGAdvertScrollViewStyleMore 样式，才有效 */
 @property (nonatomic, strong) UIColor *topTitleColor;
-/** 标题字体颜色(默认 黑色), SGAdvertScrollViewStyleTwo 样式，才有效 */
+/** 标题字体颜色(默认 黑色), SGAdvertScrollViewStyleMore 样式，才有效 */
 @property (nonatomic, strong) UIColor *bottomTitleColor;
 
-/** 标题字体大小(默认 12) */
+/** 标题字体大小(默认 13) */
 @property (nonatomic, strong) UIFont *titleFont;
 
 @end
