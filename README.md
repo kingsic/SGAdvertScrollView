@@ -59,6 +59,17 @@
 ```
 
 
+## 问题及解决方案
+
+#### 1、CocoaPods 安装 SGAdvertScrollView 时，遇到的问题及解决方案
+
+* 若在使用 CocoaPods 安装 SGAdvertScrollView 时，出现 [!] Unable to find a specification for SGAdvertScrollView 提示时，打开终端先输入 pod repo remove master；执行完毕后再输入 pod setup 即可 (可能会等待一段时间)
+
+#### 2、SGAdvertScrollView 滚动存在混乱问题及解决方案（只有 SGAdvertScrollView 的高度或其父视图的高度不为整数时，才会出现）
+
+* 解决方案：高度取整 ceil(SGAdvertScrollView 高度或其父视图高度); 若包装有父视图则父视图高度取整；若无包装父视图则 SGAdvertScrollView 高度取整
+
+
 ## 版本介绍
 
 * 2017-7-20 --> v1.1.8 修复 UICollectionView 偏移量问题
