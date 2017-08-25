@@ -5,7 +5,7 @@
 //      GitHub：https://github.com/kingsic/SGAdvertScrollView.git
 //
 //  SGAdvertScrollView.h
-//  Version 1.2.3
+//  Version 1.2.5
 //
 //  Created by kingsic on 17/3/8.
 //  Copyright © 2017年 kingsic. All rights reserved.
@@ -40,8 +40,8 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSArray *titles;
 /** SGAdvertScrollViewStyleNormal 样式下的标题字体颜色，默认为黑色 */
 @property (nonatomic, strong) UIColor *titleColor;
-/** SGAdvertScrollViewStyleNormal 样式下的标题文字是否居中，默认为 No，仅仅针对 titles 起作用 */
-@property (nonatomic, assign) BOOL isTextAlignmentCenter;
+/** SGAdvertScrollViewStyleNormal 样式下的标题文字位置，默认为 NSTextAlignmentLeft，仅仅针对 titles 起作用 */
+@property (nonatomic, assign) NSTextAlignment textAlignment;
 
 /** SGAdvertScrollViewStyleMore 样式下的顶部左边标志图片数组 */
 @property (nonatomic, strong) NSArray *topSignImages;

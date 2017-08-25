@@ -221,7 +221,6 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 
 - (void)initialization {
     _scrollTimeInterval = 3.0;
-    _isTextAlignmentCenter = NO;
     
     [self addTimer];
     _advertScrollViewStyle = SGAdvertScrollViewStyleNormal;
@@ -295,15 +294,15 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
         }
         cell.bottomLabel.text = self.bottomTitleArr[indexPath.item];
 
-        if (self.titleFont != nil) {
+        if (self.titleFont) {
             cell.topLabel.font = self.titleFont;
             cell.bottomLabel.font = self.titleFont;
         }
 
-        if (self.topTitleColor != nil) {
+        if (self.topTitleColor) {
             cell.topLabel.textColor = self.topTitleColor;
         }
-        if (self.bottomTitleColor != nil) {
+        if (self.bottomTitleColor) {
             cell.bottomLabel.textColor = self.bottomTitleColor;
         }
         return cell;
@@ -316,14 +315,15 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
         } else {
             cell.signImageView.image = [UIImage imageNamed:imagePath];
         }
-        if (self.isTextAlignmentCenter == YES) {
-            cell.titleLabel.textAlignment = NSTextAlignmentCenter;
-        }
+        
         cell.titleLabel.text = self.titleArr[indexPath.item];
-        if (self.titleFont != nil) {
+        if (self.textAlignment) {
+            cell.titleLabel.textAlignment = self.textAlignment;
+        }
+        if (self.titleFont) {
             cell.titleLabel.font = self.titleFont;
         }
-        if (self.titleColor != nil) {
+        if (self.titleColor) {
             cell.titleLabel.textColor = self.titleColor;
         }
         return cell;
@@ -405,8 +405,8 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
     _titleFont = titleFont;
 }
 
-- (void)setIsTextAlignmentCenter:(BOOL)isTextAlignmentCenter {
-    _isTextAlignmentCenter = isTextAlignmentCenter;
+- (void)setTextAlignment:(NSTextAlignment)textAlignment {
+    _textAlignment = textAlignment;
 }
 
 - (void)setTopSignImages:(NSArray *)topSignImages {

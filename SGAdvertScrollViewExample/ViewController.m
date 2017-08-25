@@ -27,7 +27,7 @@
     // top
     _advertScrollViewTop.titles = @[@"京东、天猫等 app 首页常见的广告滚动视图", @"采用代理设计模式进行封装, 可进行事件点击处理", @"建议在 github 上下载"];
     _advertScrollViewTop.titleColor = [UIColor redColor];
-    _advertScrollViewTop.isTextAlignmentCenter = YES;
+    _advertScrollViewTop.textAlignment = NSTextAlignmentCenter;
     
     
     // 例二
