@@ -2,8 +2,8 @@
 //  SGAdvertScrollViewExampleUITests.m
 //  SGAdvertScrollViewExampleUITests
 //
-//  Created by apple on 17/3/9.
-//  Copyright © 2017年 Sorgle. All rights reserved.
+//  Created by kingsic on 2017/9/27.
+//  Copyright © 2017年 kingsic. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>

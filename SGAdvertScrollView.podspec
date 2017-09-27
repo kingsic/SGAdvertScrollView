@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
     s.name         = 'SGAdvertScrollView'
-    s.version      = '1.2.5'
+    s.version      = '1.2.6'
     s.summary      = 'a carousel view advertising for iOS'
     s.homepage     = 'https://github.com/kingsic/SGAdvertScrollView'
     s.license      = 'MIT'
@@ -10,6 +10,6 @@ Pod::Spec.new do |s|
     s.source       = {:git => 'https://github.com/kingsic/SGAdvertScrollView.git', :tag => s.version}
     s.source_files = 'SGAdvertScrollView'
     s.requires_arc = true
-    s.dependency 'SDWebImage', '~> 4.0.0'
+    s.dependency "SDWebImage", '~> 4.1.0'
 end
 

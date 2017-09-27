@@ -2,7 +2,7 @@
 //  如遇到问题或有更好方案，请通过以下方式进行联系
 //      QQ：1357127436
 //      Email：kingsic@126.com
-//      GitHub：https://github.com/kingsic/SGAdvertScrollView.git
+//      GitHub：https://github.com/kingsic/SGAdvertScrollView
 //
 //  SGAdvertScrollView.m
 //  SGAdvertScrollViewExample
@@ -12,20 +12,20 @@
 //
 
 #import "SGAdvertScrollView.h"
-#import <SDWebImage/UIImageView+WebCache.h>
+#import "UIImageView+WebCache.h"
 
 static NSInteger const advertScrollViewTitleFont = 13;
 
-@interface SGAdvertScrollViewOneCell : UICollectionViewCell
+#pragma mark - - - SGAdvertScrollViewStyleNormal 样式下的 cell
+@interface SGAdvertScrollViewNormalCell : UICollectionViewCell
 @property (nonatomic, strong) UIImageView *signImageView;
 @property (nonatomic, strong) UILabel *titleLabel;
 @end
 
-@implementation SGAdvertScrollViewOneCell
+@implementation SGAdvertScrollViewNormalCell
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor clearColor];
-        
         [self.contentView addSubview:self.signImageView];
         [self.contentView addSubview:self.titleLabel];
     }
@@ -76,18 +76,18 @@ static NSInteger const advertScrollViewTitleFont = 13;
 }
 @end
 
-@interface SGAdvertScrollViewTwoCell : UICollectionViewCell
+#pragma mark - - - SGAdvertScrollViewStyleMore 样式下的 cell
+@interface SGAdvertScrollViewMoreCell : UICollectionViewCell
 @property (nonatomic, strong) UIImageView *topSignImageView;
 @property (nonatomic, strong) UILabel *topLabel;
 @property (nonatomic, strong) UIImageView *bottomSignImageView;
 @property (nonatomic, strong) UILabel *bottomLabel;
 @end
 
-@implementation SGAdvertScrollViewTwoCell
+@implementation SGAdvertScrollViewMoreCell
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor clearColor];
-        
         [self.contentView addSubview:self.topSignImageView];
         [self.contentView addSubview:self.topLabel];
         [self.contentView addSubview:self.bottomSignImageView];
@@ -177,6 +177,8 @@ static NSInteger const advertScrollViewTitleFont = 13;
 }
 @end
 
+
+#pragma mark - - - SGAdvertScrollView
 @interface SGAdvertScrollView () <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -190,8 +192,8 @@ static NSInteger const advertScrollViewTitleFont = 13;
 @implementation SGAdvertScrollView
 
 static NSInteger const advertScrollViewMaxSections = 100;
-static NSString *const advertScrollViewOneCell = @"SGAdvertScrollViewOneCell";
-static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
+static NSString *const advertScrollViewNormalCell = @"advertScrollViewNormalCell";
+static NSString *const advertScrollViewMoreCell = @"advertScrollViewMoreCell";
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -229,7 +231,6 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 - (void)setupSubviews {
     UIView *tempView = [[UIView alloc] initWithFrame:CGRectZero];
     [self addSubview:tempView];
-    
     [self addSubview:self.collectionView];
 }
 
@@ -246,7 +247,7 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
         _collectionView.pagingEnabled = YES;
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.backgroundColor = [UIColor clearColor];
-        [_collectionView registerClass:[SGAdvertScrollViewOneCell class] forCellWithReuseIdentifier:advertScrollViewOneCell];
+        [_collectionView registerClass:[SGAdvertScrollViewNormalCell class] forCellWithReuseIdentifier:advertScrollViewNormalCell];
     }
     return _collectionView;
 }
@@ -277,10 +278,11 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.advertScrollViewStyle == SGAdvertScrollViewStyleMore) {
-        SGAdvertScrollViewTwoCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:advertScrollViewTwoCell forIndexPath:indexPath];
+        SGAdvertScrollViewMoreCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:advertScrollViewMoreCell forIndexPath:indexPath];
         NSString *topImagePath = self.imageArr[indexPath.item];
         if ([topImagePath hasPrefix:@"http"]) {
             [cell.topSignImageView sd_setImageWithURL:[NSURL URLWithString:topImagePath]];
+
         } else {
             cell.topSignImageView.image = [UIImage imageNamed:topImagePath];
         }
@@ -289,6 +291,7 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
         NSString *imagePath = self.bottomImageArr[indexPath.item];
         if ([imagePath hasPrefix:@"http"]) {
             [cell.bottomSignImageView sd_setImageWithURL:[NSURL URLWithString:imagePath]];
+
         } else {
             cell.bottomSignImageView.image = [UIImage imageNamed:imagePath];
         }
@@ -308,10 +311,11 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
         return cell;
         
     } else {
-        SGAdvertScrollViewOneCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:advertScrollViewOneCell forIndexPath:indexPath];
+        SGAdvertScrollViewNormalCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:advertScrollViewNormalCell forIndexPath:indexPath];
         NSString *imagePath = self.imageArr[indexPath.item];
         if ([imagePath hasPrefix:@"http"]) {
             [cell.signImageView sd_setImageWithURL:[NSURL URLWithString:imagePath]];
+
         } else {
             cell.signImageView.image = [UIImage imageNamed:imagePath];
         }
@@ -378,7 +382,7 @@ static NSString *const advertScrollViewTwoCell = @"SGAdvertScrollViewTwoCell";
     _advertScrollViewStyle = advertScrollViewStyle;
     if (advertScrollViewStyle == SGAdvertScrollViewStyleMore) {
         _advertScrollViewStyle = SGAdvertScrollViewStyleMore;
-        [_collectionView registerClass:[SGAdvertScrollViewTwoCell class] forCellWithReuseIdentifier:advertScrollViewTwoCell];
+        [_collectionView registerClass:[SGAdvertScrollViewMoreCell class] forCellWithReuseIdentifier:advertScrollViewMoreCell];
     }
 }
 
