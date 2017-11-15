@@ -5,7 +5,7 @@
 //      GitHub：https://github.com/kingsic/SGAdvertScrollView
 //
 //  SGAdvertScrollView.h
-//  Version 1.2.7
+//  Version 1.2.6
 //
 //  Created by kingsic on 17/3/8.
 //  Copyright © 2017年 kingsic. All rights reserved.
