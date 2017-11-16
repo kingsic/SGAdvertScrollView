@@ -14,7 +14,7 @@
 
 ## SGAdvertScrollView 集成
 
-* 1、CocoaPods 导入 pod 'SGAdvertScrollView','~> 1.2.6'
+* 1、CocoaPods 导入 pod 'SGAdvertScrollView','~> 1.2.7'
 
 * 2、下载、拖拽 “SGAdvertScrollView” 文件夹到工程中
 
@@ -62,11 +62,13 @@
 
 ## 版本介绍
 
-* 2017-7-20 ：v1.1.8 修复 UICollectionView 偏移量问题
+* 2017-07-20 ：v1.1.8 修复 UICollectionView 偏移量问题
 
-* 2017-8-2 ：v1.2.0 解决标题无数据引起的崩溃问题
+* 2017-08-02 ：v1.2.0 解决标题无数据引起的崩溃问题
 
-* 2017-9-27 ：v1.2.6 API 的规范以及更新到对 SDWebImage 4.1.0 的依赖
+* 2017-09-27 ：v1.2.6 API 的规范以及更新到对 SDWebImage 4.1.0 的依赖
+
+* 2017-11-16 ：v1.2.7 解决 Xcode 9 控制台打印问题以及性能优化
 
 
 ## Concluding remarks
