@@ -279,21 +279,45 @@ static NSString *const advertScrollViewMoreCell = @"advertScrollViewMoreCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.advertScrollViewStyle == SGAdvertScrollViewStyleMore) {
         SGAdvertScrollViewMoreCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:advertScrollViewMoreCell forIndexPath:indexPath];
-        NSString *topImagePath = self.imageArr[indexPath.item];
-        if ([topImagePath hasPrefix:@"http"]) {
-            [cell.topSignImageView sd_setImageWithURL:[NSURL URLWithString:topImagePath]];
-
-        } else {
-            cell.topSignImageView.image = [UIImage imageNamed:topImagePath];
+        NSInteger topImagesCount = self.imageArr.count;
+        if (topImagesCount > 0) {
+            NSString *topImagePath = self.imageArr[indexPath.item];
+            if (topImagePath == nil || [topImagePath isEqualToString:@""]) { // 解决 iOS 11 无图片，控制台打印问题
+                if ([topImagePath hasPrefix:@"http"]) {
+                    [cell.topSignImageView sd_setImageWithURL:[NSURL URLWithString:@"www.kingsic22.com"]];
+                    
+                } else {
+                    cell.topSignImageView.image = [UIImage imageNamed:@"kingsic"];
+                }
+            } else {
+                if ([topImagePath hasPrefix:@"http"]) {
+                    [cell.topSignImageView sd_setImageWithURL:[NSURL URLWithString:topImagePath]];
+                    
+                } else {
+                    cell.topSignImageView.image = [UIImage imageNamed:topImagePath];
+                }
+            }
         }
         cell.topLabel.text = self.titleArr[indexPath.item];
 
-        NSString *imagePath = self.bottomImageArr[indexPath.item];
-        if ([imagePath hasPrefix:@"http"]) {
-            [cell.bottomSignImageView sd_setImageWithURL:[NSURL URLWithString:imagePath]];
-
-        } else {
-            cell.bottomSignImageView.image = [UIImage imageNamed:imagePath];
+        NSInteger bottomImagesCount = self.bottomImageArr.count;
+        if (bottomImagesCount > 0) {
+            NSString *bottomImagePath = self.bottomImageArr[indexPath.item];
+            if (bottomImagePath == nil || [bottomImagePath isEqualToString:@""]) { // 解决 iOS 11 无图片，控制台打印问题
+                if ([bottomImagePath hasPrefix:@"http"]) {
+                    [cell.bottomSignImageView sd_setImageWithURL:[NSURL URLWithString:@"www.kingsic22.com"]];
+                    
+                } else {
+                    cell.bottomSignImageView.image = [UIImage imageNamed:@"kingsic"];
+                }
+            } else {
+                if ([bottomImagePath hasPrefix:@"http"]) {
+                    [cell.bottomSignImageView sd_setImageWithURL:[NSURL URLWithString:bottomImagePath]];
+                    
+                } else {
+                    cell.bottomSignImageView.image = [UIImage imageNamed:bottomImagePath];
+                }
+            }
         }
         cell.bottomLabel.text = self.bottomTitleArr[indexPath.item];
 
@@ -312,15 +336,27 @@ static NSString *const advertScrollViewMoreCell = @"advertScrollViewMoreCell";
         
     } else {
         SGAdvertScrollViewNormalCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:advertScrollViewNormalCell forIndexPath:indexPath];
-        NSString *imagePath = self.imageArr[indexPath.item];
-        if ([imagePath hasPrefix:@"http"]) {
-            [cell.signImageView sd_setImageWithURL:[NSURL URLWithString:imagePath]];
-
-        } else {
-            cell.signImageView.image = [UIImage imageNamed:imagePath];
+        NSInteger imagesCount = self.imageArr.count;
+        if (imagesCount > 0) {
+            NSString *imagePath = self.imageArr[indexPath.item];
+            if (imagePath == nil || [imagePath isEqualToString:@""]) { // 解决 iOS 11 无图片，控制台打印问题
+                if ([imagePath hasPrefix:@"http"]) {
+                    [cell.signImageView sd_setImageWithURL:[NSURL URLWithString:@"www.kingsic22.com"]];
+                    
+                } else {
+                    cell.signImageView.image = [UIImage imageNamed:@"kingsic"];
+                }
+            } else {
+                if ([imagePath hasPrefix:@"http"]) {
+                    [cell.signImageView sd_setImageWithURL:[NSURL URLWithString:imagePath]];
+                    
+                } else {
+                    cell.signImageView.image = [UIImage imageNamed:imagePath];
+                }
+            }
         }
-        
         cell.titleLabel.text = self.titleArr[indexPath.item];
+        
         if (self.textAlignment) {
             cell.titleLabel.textAlignment = self.textAlignment;
         }
