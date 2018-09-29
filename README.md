@@ -71,7 +71,9 @@
 * 2017-11-16 ：v1.2.7 解决 Xcode 9 控制台打印问题以及性能优化
 
 
-## Concluding remarks
+## Author
 
-* 如在使用中, 遇到什么问题或有更好建议者, 请记得 [Issues me](https://github.com/kingsic/SGAdvertScrollView/issues) 或 kingsic@126.com 邮箱联系我
+* Email：kingsic@126.com
 
+* QQ群：(付费群)<br>
+![](https://github.com/kingsic/Kar98k/blob/master/Source/QQGroup_qrcode.png)
