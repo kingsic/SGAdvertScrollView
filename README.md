@@ -70,10 +70,3 @@
 
 * 2017-11-16 ：v1.2.7 解决 Xcode 9 控制台打印问题以及性能优化
 
-
-## Author
-
-* Email：kingsic@126.com
-
-* QQ群：(付费群)<br>
-![](https://github.com/kingsic/Kar98k/blob/master/Source/QQGroup_qrcode.png)
