@@ -2,6 +2,9 @@
 # SGAdvertScrollView
 
 
+* QQ群：429899752
+
+
 ## 效果图
 
 ![](https://github.com/kingsic/SGAdvertScrollView/raw/master/Gif/sorgle.gif) 
@@ -70,3 +73,7 @@
 
 * 2017-11-16 ：v1.2.7 解决 Xcode 9 控制台打印问题以及性能优化
 
+
+License
+
+SGAdvertScrollView is released under the MIT license. See [LICENSE](https://github.com/kingsic/SGAdvertScrollView/blob/master/LICENSE) for details.
